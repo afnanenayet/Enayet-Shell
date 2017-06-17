@@ -46,5 +46,8 @@ The default config file includes the following paths:
     /usr/sbin
 
 # Future features
-I plan on including some sort of style customization to the config
+
+* tab completion
+* style customization via config file
+* python scripting? (*maybe*)
 
