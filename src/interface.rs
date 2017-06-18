@@ -8,8 +8,7 @@
 use std::io::{
     self, 
     Write, 
-    stdin, 
-    BufRead
+    BufRead,
 };
 
 // Prints some given output to stdout 
@@ -28,9 +27,13 @@ pub fn print_err(output: &str) {
 // operation can fail, leaving a None value
 pub fn get_input(prompt: &str, working_dir: &str) -> String {
     print_shell_prompt(prompt, working_dir);
-    let input = stdin().lock().lines().next().unwrap();
-    input.expect("unable to retrieve input from stdin");
-    Ok(input)
+
+    // Read line from stdin
+    let mut input = String::new();
+    let stdin = io::stdin();
+    stdin.lock().read_line(&mut input)
+        .expect("could not read from stdin");
+    input
 }
 
 // Prints shell prompt to STDOUT
