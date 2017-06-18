@@ -1,0 +1,7 @@
+# Travis CI config for Enayet Shell
+# Tests if shell can build properly
+language: rust
+
+# override the test target as tests have not been defined yet
+script: make all
+
