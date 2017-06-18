@@ -14,31 +14,34 @@
 /// This object is used to represent a shell session and hold shell state 
 /// information
 
+use std::path::PathBuf;
+
 // The struct that holds shell information
 #[derive(Debug)]
 #[derive(Default)]
-pub struct shell {
+pub struct Shell {
     // TODO 
-    working_dir: String, // The current working directory 
+    working_dir: PathBuf, // The current working directory 
     input_history: Vec<String>, // The user's input history
     output_count: u64, // The number of lines outputted
 }
 
 // Methods for shell
-impl shell {
+impl Shell {
     // TODO: complete this class
     // Do these variables need to be explicitly initialized?
 
     // Change the shell's working directory. Will return an option which will 
     // indicate if there was an error. Supply a string with the filepath of 
     // the working directory
-    fn change_working_dir(&self, wd: String) {
+    fn change_working_dir(&mut self, wd: &String) {
+        self.working_dir = PathBuf::from(wd);
     }
 
     // Returns the number of commands that have already been inputted to the 
     // shell
-    fn input_count(&self) -> usize {
-        self.input_history.len()
+    fn input_count(&self) -> u64 {
+        self.input_history.len() as u64
     }
 }
 
