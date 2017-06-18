@@ -33,7 +33,7 @@ pub fn get_input(prompt: &str, working_dir: &str) -> String {
     let stdin = io::stdin();
     stdin.lock().read_line(&mut input)
         .expect("could not read from stdin");
-    input
+    input.trim().to_string() // strip the newline
 }
 
 // Prints shell prompt to STDOUT
