@@ -18,8 +18,13 @@
 ///
 
 mod interface;
+mod shell;
 
-use std::io::{self, BufRead, Write};
+use std::io::{
+    self, 
+    BufRead, 
+    Write,
+};
 
 // Program wide constants
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
@@ -29,14 +34,14 @@ const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 fn main() {
     // Initialize shell
     init_shell();
-    
+
     let mut valid_cmd = true;
-    
+
     // Loop until user wants to exit
     while valid_cmd {
         valid_cmd = shell_loop();
     }
-    
+
     // Exit shell with return code
     shell_exit(0);
 }
@@ -65,9 +70,9 @@ fn shell_loop() -> bool {
     // Exit if necessary 
     if input != exit_code {
         println!("cmd: {}", input);
-        return true;
+        true
     } else {
-        return false;
+        false
     }
 }
 
