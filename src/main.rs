@@ -20,11 +20,6 @@
 mod interface;
 mod shell;
 
-use std::io::{
-    self, 
-    BufRead, 
-    Write,
-};
 
 // Program wide constants
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
@@ -57,15 +52,13 @@ fn init_shell() {
 // Captures input from stdin and executes commands from 
 fn shell_loop() -> bool {
     let exit_code = "exit";
+
+    // TODO move these to Shell struct
     let shell_prompt = ">";
+    let working_dir = "~";
 
-    interface::print_shell_prompt(shell_prompt, "~");
-    // Read input from stdin
-    let stdin = io::stdin();
-
-    // "elegant syntax"
-    // TODO unsafe, change this
-    let input = stdin.lock().lines().next().unwrap().unwrap();
+    // Get command from user
+    let input = interface::get_input(shell_prompt, working_dir);
 
     // Exit if necessary 
     if input != exit_code {
