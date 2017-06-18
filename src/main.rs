@@ -30,12 +30,7 @@ fn main() {
     // Initialize shell
     init_shell();
 
-    let mut valid_cmd = true;
-
-    // Loop until user wants to exit
-    while valid_cmd {
-        valid_cmd = shell_loop();
-    }
+    while shell_loop() {}
 
     // Exit shell with return code
     shell_exit(0);
@@ -51,7 +46,7 @@ fn init_shell() {
 
 // Captures input from stdin and executes commands from 
 fn shell_loop() -> bool {
-    let exit_code = "exit";
+    let exit_code = "exit".to_string();
 
     // TODO move these to Shell struct
     let shell_prompt = ">";
@@ -62,7 +57,7 @@ fn shell_loop() -> bool {
 
     // Exit if necessary 
     if input != exit_code {
-        println!("cmd: {}", input);
+        println!("cmd: {}", input); // TODO replace with command dispatch
         true
     } else {
         false
