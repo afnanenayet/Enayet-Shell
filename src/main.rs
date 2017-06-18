@@ -17,6 +17,8 @@
 /// * 1 - error reading config file
 ///
 
+mod interface;
+
 use std::io::{self, BufRead, Write};
 
 // Program wide constants
@@ -35,9 +37,8 @@ fn main() {
         valid_cmd = shell_loop();
     }
     
-    // Returns an exit code to the shell
-    let return_code = shell_exit();
-    std::process::exit(return_code);
+    // Exit shell with return code
+    shell_exit(0);
 }
 
 // Initialize shell, using config file provided from arguments (if any)
@@ -53,7 +54,7 @@ fn shell_loop() -> bool {
     let exit_code = "exit";
     let shell_prompt = ">";
 
-    print_shell_prompt(shell_prompt);
+    interface::print_shell_prompt(shell_prompt, "~");
     // Read input from stdin
     let stdin = io::stdin();
 
@@ -70,16 +71,8 @@ fn shell_loop() -> bool {
     }
 }
 
-// Cleans up and exits the shell
-fn shell_exit() -> i32 {
-    println!("Thank you for using the Enayet shell");
-    return 0;
-}
-
-// Prints shell prompt to STDOUT
-fn print_shell_prompt(prompt: &str) {
-    println!("(working directory)");
-    print!("{} ", prompt);
-    io::stdout().flush().unwrap();
+// Cleans up and exits the shell with the specified exit code
+fn shell_exit(exit_status: i32) {
+    std::process::exit(exit_status);
 }
 
