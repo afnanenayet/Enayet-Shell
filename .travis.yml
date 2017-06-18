@@ -3,5 +3,6 @@
 language: rust
 
 # override the test target as tests have not been defined yet
-script: make all
+script:
+  - cargo build --verbose --all
 
