@@ -8,7 +8,9 @@ in Rust (such as `cd` and `ls`).
 
 # Building the shell
 
-I built this on MacOS 10.12. I have not tested this with any other platform.
+I built this on MacOS 10.12 and on Linux (Ubuntu Precise via Travis CI). It has
+not been tested on any other platform.
+
 To modify or build this shell:
 
     git clone https://github.com/afnanenayet/Enayet-Shell.git
@@ -50,4 +52,4 @@ The default config file includes the following paths:
 * tab completion
 * style customization via config file
 * python scripting? (*maybe*)
-
+* *Tests*!
