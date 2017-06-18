@@ -5,7 +5,12 @@
 /// STDERR and abstracts away some of the details like formatting and shell 
 /// prompts
 
-use std::io::{self, Write};
+use std::io::{
+    self, 
+    Write, 
+    stdin, 
+    BufRead
+};
 
 // Prints some given output to stdout 
 pub fn print_out(output: &str) {
@@ -23,7 +28,7 @@ pub fn print_err(output: &str) {
 // operation can fail, leaving a None value
 pub fn get_input(prompt: &str, working_dir: &str) -> String {
     print_shell_prompt(prompt, working_dir);
-    let input = stdin.lock().lines().next().unwrap();
+    let input = stdin().lock().lines().next().unwrap();
     input.expect("unable to retrieve input from stdin");
     Ok(input)
 }
