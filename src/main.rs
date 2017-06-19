@@ -19,7 +19,7 @@
 
 mod interface;
 mod shell;
-
+mod parser;
 
 // Program wide constants
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
