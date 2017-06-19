@@ -16,6 +16,7 @@
 
 use std::path::PathBuf;
 use std::fs::File;
+use parser;
 
 // The default configuration path
 
@@ -56,7 +57,7 @@ impl Shell {
     // Set include paths from a config file. Pass in a string with the path to 
     // the config file
     fn load_paths(&mut self, config_path: Option<String>) {
-        
+        let paths = parser::config::load_paths_from_config(Some("test")); 
     }
 }
 

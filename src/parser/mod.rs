@@ -3,6 +3,6 @@
 /// Contains helper functions to help with parsing strings
 ///
 
-mod config;
+pub mod config;
 
 // TODO
