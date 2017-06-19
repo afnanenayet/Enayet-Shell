@@ -35,7 +35,7 @@ binary.
 
 The config file has a very simple format that is subject to change with any 
 update. Currently, the config file contains path directories, separated by 
-lines. The config file may contain nonexistant directories - this will not 
+lines. The config file may contain nonexistent directories - this will not 
 throw an error, the shell will search for executables in the directories it 
 can find.
 
