@@ -6,3 +6,9 @@
 pub mod config;
 
 // TODO
+
+// unit tests
+#[cfg(test)]
+mod tests {
+}
+

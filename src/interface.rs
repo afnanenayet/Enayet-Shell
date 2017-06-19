@@ -44,3 +44,9 @@ pub fn print_shell_prompt(prompt: &str, wd_str: &str) {
     r.expect("failed to flush stdout");
 }
 
+// unit tests
+#[cfg(test)]
+mod tests {
+}
+
+

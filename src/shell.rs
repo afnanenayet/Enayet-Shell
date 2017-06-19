@@ -61,3 +61,8 @@ impl Shell {
     }
 }
 
+// unit tests
+#[cfg(test)]
+mod tests {
+}
+

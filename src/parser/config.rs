@@ -67,3 +67,8 @@ fn create_default_config(file_path: &str) -> Result<(), io::Error> {
     Ok(())
 }
 
+// unit tests
+#[cfg(test)]
+mod tests {
+}
+
