@@ -15,6 +15,9 @@
 /// information
 
 use std::path::PathBuf;
+use std::fs::File;
+
+// The default configuration path
 
 // The struct that holds shell information
 #[derive(Debug)]
@@ -43,6 +46,17 @@ impl Shell {
     // shell
     fn input_count(&self) -> u64 {
         self.input_history.len() as u64
+    }
+
+    // Set include paths for shell using path strings
+    fn set_paths(&mut self, paths: Vec<String>) {
+        self.paths = paths;
+    }
+
+    // Set include paths from a config file. Pass in a string with the path to 
+    // the config file
+    fn load_paths(&mut self, config_path: Option<String>) {
+        
     }
 }
 
