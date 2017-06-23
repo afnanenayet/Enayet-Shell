@@ -2,7 +2,5 @@
 # Tests if shell can build properly
 language: rust
 
-# override the test target as tests have not been defined yet
-script:
-  - cargo build --verbose --all
+# Travis will run cargo build and cargo test by default
 
