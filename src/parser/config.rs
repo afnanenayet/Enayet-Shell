@@ -57,7 +57,7 @@ fn create_default_config(file_path: &str) -> Result<(), io::Error> {
     // Need to use openoptions to write ot a file (the regular create file
     // creates a file in read-only mode)
     let path_obj = Path::new(file_path);
-    let mut path_str = path_obj.display();
+    let mut path_str = path_obj.to_str().unwrap();
     let mut file = File::create(path_str)?;
 
     // Write each path as a line to the file
