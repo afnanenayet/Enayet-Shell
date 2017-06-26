@@ -17,55 +17,26 @@
 /// * 1 - error reading config file
 ///
 
-mod interface;
-mod shell;
-mod parser;
+extern crate ensh;
 
-// Program wide constants
-const VERSION: &'static str = env!("CARGO_PKG_VERSION");
+use std::env;
+use ensh::{Args, run};
 
 // Entry point for shell
 // Initializees the shell, then loops program, waiting for commands
 fn main() {
-    // Initialize shell
-    init_shell();
+    // Command line args
+    let mut args: Vec<String> = env::args().collect();
 
-    while shell_loop() {}
+    // Checking to see if argument was given, if not: 
+    // make the arg_str a None
+    let arg_str: Option<String> = match args.len() {
+        1 => None,
+        _ => Some(args.remove(1)),
+    };
+    let arg_struct: Args = Args::new(arg_str);
 
-    // Exit shell with return code
-    shell_exit(0);
-}
-
-// Initialize shell, using config file provided from arguments (if any)
-// If no config file was given, search for default config file path. If 
-// default does not exist, create a default config file with default 
-// paths
-fn init_shell() {
-    println!("Enayet Shell | v{}", VERSION);
-}
-
-// Captures input from stdin and executes commands from 
-fn shell_loop() -> bool {
-    let exit_code = "exit".to_string();
-
-    // TODO move these to Shell struct
-    let shell_prompt = ">";
-    let working_dir = "~";
-
-    // Get command from user
-    let input = interface::get_input(shell_prompt, working_dir);
-
-    // Exit if necessary 
-    if input != exit_code {
-        println!("cmd: {}", input); // TODO replace with command dispatch
-        true
-    } else {
-        false
-    }
-}
-
-// Cleans up and exits the shell with the specified exit code
-fn shell_exit(exit_status: i32) {
-    std::process::exit(exit_status);
+    // Run program
+    run(arg_struct);
 }
 
