@@ -1,10 +1,10 @@
 /// config.rs    Afnan Enayet
 ///
 /// The config module provides helper/convenience functions to parse 
-/// the configuraiton file for the shell 
+/// the configuration file for the shell 
 
 use std::io;
-use std::fs::File;
+use std::fs::{File, OpenOptions};
 use std::path::{Path};
 use std::io::{Write, BufReader, BufRead};
 
@@ -54,17 +54,26 @@ pub fn load_paths_from_config(config_path: Option<&str>) -> Vec<String> {
 // Creates the default configuration file in the default location. Will 
 // panic if for some reason cannot write default config to path
 fn create_default_config(file_path: &str) -> Result<(), io::Error> {
-    let mut file = File::create(file_path)?;
+    // Need to use openoptions to write ot a file (the regular create file
+    // creates a file in read-only mode)
+    let path_obj = Path::new(file_path);
+    let mut path_str = path_obj.display();
+    let mut file = File::create(path_str)?;
 
+    // Write each path as a line to the file
     let default_paths = vec! [
-        "hello",
-        "world",
+        "/usr/bin",
+        "/usr/local/bin",
+        "/usr/local/sbin",
+        "/bin",
+        "/usr/sbin",
     ];
 
     for line in default_paths {
         file.write(line.as_bytes())?; 
+        file.write("\n".as_bytes())?;
     }
-    file.flush()?;
+    file.sync_all()?;
     Ok(())
 }
 
@@ -76,7 +85,7 @@ mod tests {
     // Test if the config file is able to write to the filesystem
     #[test]
     fn test_write_config_fs() {
-        create_default_config("~/test_config").expect("Unable to write file");
+        create_default_config("test_config").expect("Unable to write file");
     }
 
 
@@ -91,7 +100,7 @@ mod tests {
     #[test]
     fn verify_read_write_config() {
         let config_path = "./test_config_rw";
-        create_default_config(config_path).expect("Unable to write file");
+        create_default_config(config_path).expect("Unable to write config file");
         let paths = load_paths_from_config(Some(config_path));
         assert_eq!(paths.len(), 1);
     }

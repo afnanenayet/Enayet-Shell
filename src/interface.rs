@@ -49,4 +49,3 @@ pub fn print_shell_prompt(prompt: &str, wd_str: &str) {
 mod tests {
 }
 
-
