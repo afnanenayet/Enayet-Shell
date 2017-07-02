@@ -71,8 +71,8 @@ fn create_default_config(file_path: &str, def_paths: &Vec<String>)
 }
 
 // Copies the default config file to the specified path
-fn cp_def_config(file_path: &str) -> Result<(), io::Error> {
-    let path = Path::new(file_path);
+fn cp_def_config(src_path: &str, dest_path: &str) -> Result<(), io::Error> {
+    fs::copy(src_path, dest_path)?
 }
 
 // unit tests
