@@ -16,6 +16,8 @@
 
 use std::path::PathBuf;
 use std::fs::File;
+use std::io;
+
 use parser;
 
 // The default configuration path
@@ -33,20 +35,62 @@ pub struct Shell {
 
 // Methods for shell
 impl Shell {
-    // TODO: complete this class
-    // Do these variables need to be explicitly initialized?
+    // TODO Do these variables need to be explicitly initialized?
 
-    // Change the shell's working directory. Will return an option which will 
-    // indicate if there was an error. Supply a string with the filepath of 
-    // the working directory
-    fn change_working_dir(&mut self, wd: &String) {
-        self.working_dir = PathBuf::from(wd);
+    // Default constructor for the shell. Will initialize with default 
+    // values and return a Shell struct
+    fn default() -> Shell {
+        Shell {
+            working_dir : PathBuf::from("~"),
+            input_history : Vec::new(),
+            output_count : 0,
+            paths : Vec::new(),
+        }
+    }
+
+    // Change the shell's working directory. Will return an a boolean 
+    // indicating whether the working directory was successfully changed
+    // or not
+    fn change_working_dir(&mut self, wd: &String) -> bool {
+        let path_obj = PathBuf::from(wd);
+
+        if path_obj.exists() {
+            self.working_dir = path_obj;
+            false
+        } else {
+            true
+        }
     }
 
     // Returns the number of commands that have already been inputted to the 
     // shell
     fn input_count(&self) -> u64 {
         self.input_history.len() as u64
+    }
+
+    // Conveys raw input/command to the shell
+    fn cmd(&mut self, input: &str) {
+        let path_obj = PathBuf::from(input);
+    }
+
+    // Detects whether the binary exists, searching the paths that were loaded
+    // from the config file
+    fn find_bin(&self, bin_name: &str) -> bool {
+        let mut bin_found = false;
+
+        // Searching every path in the paths vector for the binary
+        for path in self.paths.clone() {
+            let full_bin_path_str = path + "/" + bin_name;
+
+            println!("{}", full_bin_path_str); // TODO remove
+
+            bin_found = PathBuf::from(full_bin_path_str).exists();
+
+            if bin_found {
+                return true;
+            }
+        }
+        bin_found
     }
 
     // Set include paths for shell using path strings
@@ -56,13 +100,45 @@ impl Shell {
 
     // Set include paths from a config file. Pass in a string with the path to 
     // the config file
-    fn load_paths(&mut self, config_path: Option<String>) {
-        let paths = parser::config::load_paths_from_config(Some("test")); 
+    fn load_paths(&mut self, config_path: Option<&str>, 
+                  default_paths: &Vec<String>) {
+        let paths = parser::config::load_paths_from_config(config_path, 
+                                                           &default_paths); 
     }
 }
 
 // unit tests
 #[cfg(test)]
 mod tests {
+    use super::*;
+
+    // Returns a vector with some sample default paths for the purposes of 
+    // testing
+    fn create_default_path_vec() -> Vec<String> {
+        vec![
+            "/usr/bin".to_string(),
+            "/usr/local/bin".to_string(),
+        ]
+    }
+
+    // Tests if paths can load into the shell
+    #[test]
+    fn test_load_paths() {
+        let mut shell = Shell::default();
+        let def_paths_vec = create_default_path_vec();
+        shell.load_paths(Some("test_config"), &def_paths_vec);
+        assert_eq!(shell.paths.len(), 2);
+    }
+
+    // Tests if the shell can look for a file, in this case a binary, 
+    // searching the paths set for the shell. Assumes top is available 
+    // in one of the paths
+    #[test]
+    fn test_search_bin() {
+        let mut shell = Shell::default();
+        let def_paths_vec = create_default_path_vec();
+        shell.paths = def_paths_vec;
+        assert!(shell.find_bin("top"));
+    }
 }
 
