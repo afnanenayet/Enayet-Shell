@@ -10,6 +10,7 @@ use std::error::Error;
 
 mod interface;
 mod parser;
+mod shell;
 
 // Program wide constants
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
