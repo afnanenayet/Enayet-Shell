@@ -4,7 +4,7 @@
 /// the configuration file for the shell 
 
 use std::io;
-use std::fs::{File, OpenOptions};
+use std::fs::{self, File, OpenOptions};
 use std::path::{Path};
 use std::io::{Write, BufReader, BufRead};
 
