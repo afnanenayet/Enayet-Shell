@@ -28,6 +28,9 @@ pub fn load_paths_from_config(config_path: Option<&str>, def_paths: &Vec<String>
     let file = match file {
         Ok(file) => file,
         Err(_) => { 
+            // TODO debug remove
+            println!("Could not read file");
+
             // Try to read from default config
             // Create a new default config if necessary
             if default_exists {
@@ -42,11 +45,14 @@ pub fn load_paths_from_config(config_path: Option<&str>, def_paths: &Vec<String>
     let reader = BufReader::new(file);
     let mut result = Vec::new();
 
-    // Read config file line by line, adding paths that exist
+    // Read config file line by line
     for line in reader.lines().enumerate() {
-        if Path::new(default_config_path).exists() {
-            let line_result = line.1;
-            result.push(line_result.unwrap().to_string());
+        let line_result = line.1;
+        let path_str = line_result.unwrap().to_string().clone();
+
+        // Check if path is valid and add to vector
+        if Path::new(&path_str).exists() {
+            result.push(path_str);
         }
     }
     result
@@ -71,8 +77,8 @@ fn create_default_config(file_path: &str, def_paths: &Vec<String>)
 }
 
 // Copies the default config file to the specified path
-fn cp_def_config(src_path: &str, dest_path: &str) -> Result<(), io::Error> {
-    fs::copy(src_path, dest_path)?
+fn cp_def_config(src_path: &str, dest_path: &str) -> Result<u64, io::Error> {
+    fs::copy(src_path, dest_path)
 }
 
 // unit tests
@@ -80,34 +86,40 @@ fn cp_def_config(src_path: &str, dest_path: &str) -> Result<(), io::Error> {
 mod tests {
     use super::*;
     
-    static default_paths: Vec<String> = [
-        "/usr/bin".to_string(),
-        "/usr/local/bin".to_string(),
-    ].to_vec();
+    // Returns a vector of default paths for use in tests
+    fn create_def_paths() -> Vec<String> {
+        let paths: Vec<String> = [
+            "/usr/bin".to_string(),
+            "/usr/local/bin".to_string(),
+        ].to_vec();
+        paths
+    }
 
     // Test if the config file is able to write to the filesystem
     #[test]
     fn test_write_config_fs() {
+        let default_paths = create_def_paths();
         create_default_config("test_config", &default_paths)
             .expect("Unable to write file");
     }
 
-
     // Test if the shell can read a config file from the filesystem
     #[test]
     fn test_read_config_fs() {
-        load_paths_from_config(Some("/Users/aenayet/test_config"), &default_paths);
+        let default_paths = create_def_paths();
+        load_paths_from_config(Some("test_config_r"), &default_paths);
     }
 
     // Tests that the functions are able to both read and write to a file 
-    // correctly with the proper output
+    // correctly, as well as store the results in a vector
     #[test]
     fn verify_read_write_config() {
-        let config_path = "./test_config_rw";
+        let config_path = "test_config_rw";
+        let default_paths = create_def_paths();
         create_default_config(config_path, &default_paths)
             .expect("Unable to write config file");
         let paths = load_paths_from_config(Some(config_path), &default_paths);
-        assert_eq!(paths.len(), 1);
+        assert_eq!(paths.len(), 2);
     }
 }
 
