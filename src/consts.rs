@@ -11,7 +11,7 @@
 
 // Default paths to be used for the program when no configuration file has been 
 // specified (used to find binaries)
-const DEFAULT_PATHS: &'static [&'static str] = &[
+pub const DEFAULT_PATHS: &'static [&'static str] = &[
     "/usr/bin",
     "/usr/local/bin",
     "/usr/local/sbin",
@@ -19,3 +19,4 @@ const DEFAULT_PATHS: &'static [&'static str] = &[
     "/bin",
 ];
 
+pub const SHELL_PROMPT: &'static str = ">";
