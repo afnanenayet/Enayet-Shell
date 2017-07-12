@@ -99,7 +99,7 @@ impl Shell {
     // the config file
     fn load_paths(&mut self, config_path: Option<&str>, 
                   default_paths: &Vec<String>) {
-        let paths = parser::config::load_paths_from_config(config_path, 
+        self.paths = parser::config::load_paths_from_config(config_path, 
                                                            &default_paths); 
     }
 }
@@ -123,7 +123,7 @@ mod tests {
     fn test_load_paths() {
         let mut shell = Shell::default();
         let def_paths_vec = create_default_path_vec();
-        shell.load_paths(Some("test_config"), &def_paths_vec);
+        shell.load_paths(Some("unit_test_files/config_r"), &def_paths_vec);
         assert!(shell.paths.len() > 0);
     }
 
