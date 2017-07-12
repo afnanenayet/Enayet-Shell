@@ -28,9 +28,6 @@ pub fn load_paths_from_config(config_path: Option<&str>, def_paths: &Vec<String>
     let file = match file {
         Ok(file) => file,
         Err(_) => { 
-            // TODO debug remove
-            println!("Could not read file");
-
             // Try to read from default config
             // Create a new default config if necessary
             if default_exists {

@@ -51,14 +51,14 @@ impl Shell {
     // Change the shell's working directory. Will return an a boolean 
     // indicating whether the working directory was successfully changed
     // or not
-    fn change_working_dir(&mut self, wd: &String) -> bool {
+    fn change_working_dir(&mut self, wd: &str) -> bool {
         let path_obj = PathBuf::from(wd);
 
         if path_obj.exists() {
             self.working_dir = path_obj;
-            false
-        } else {
             true
+        } else {
+            false
         }
     }
 
@@ -136,6 +136,16 @@ mod tests {
         let def_paths_vec = create_default_path_vec();
         shell.paths = def_paths_vec;
         assert!(shell.find_bin("top"));
+    }
+
+    // tests to see if the shell can properly change working directories
+    #[test]
+    fn test_cwd() {
+        // Shell test setup
+        let mut shell = Shell::default();
+        let def_paths_vec = create_default_path_vec();
+        shell.paths = def_paths_vec;
+        assert!(shell.change_working_dir("/"));
     }
 }
 
