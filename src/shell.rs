@@ -52,6 +52,7 @@ impl Shell {
     fn change_working_dir(&mut self, wd: &str) -> bool {
         let path_obj = PathBuf::from(wd);
 
+        // Only change wd if it exists
         if path_obj.exists() {
             self.working_dir = path_obj;
             true
@@ -114,6 +115,12 @@ mod tests {
             "/usr/bin".to_string(),
             "/usr/local/bin".to_string(),
         ]
+    }
+
+    // Check if shell initializes properly
+    #[test]
+    fn test_default_shell_init() {
+        let shell = Shell::default();
     }
 
     // Tests if shell can load any paths from the config file
