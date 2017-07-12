@@ -35,8 +35,6 @@ pub struct Shell {
 
 // Methods for shell
 impl Shell {
-    // TODO Do these variables need to be explicitly initialized?
-
     // Default constructor for the shell. Will initialize with default 
     // values and return a Shell struct
     fn default() -> Shell {
@@ -100,7 +98,7 @@ impl Shell {
     fn load_paths(&mut self, config_path: Option<&str>, 
                   default_paths: &Vec<String>) {
         self.paths = parser::config::load_paths_from_config(config_path, 
-                                                           &default_paths); 
+                                                            &default_paths); 
     }
 }
 
