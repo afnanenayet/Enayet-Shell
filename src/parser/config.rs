@@ -107,7 +107,7 @@ mod tests {
     #[test]
     fn test_read_config_fs() {
         let default_paths = create_def_paths();
-        load_paths_from_config(Some("test_config_r"), &default_paths);
+        load_paths_from_config(Some("unit_test_files/config_r"), &default_paths);
     }
 
     // Tests that the functions are able to both read and write to a file 
