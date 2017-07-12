@@ -17,5 +17,5 @@ const DEFAULT_PATHS: &'static [&'static str] = &[
     "/usr/local/sbin",
     "/usr/sbin",
     "/bin",
-]
+];
 
