@@ -81,9 +81,6 @@ impl Shell {
         // Searching every path in the paths vector for the binary
         for path in self.paths.clone() {
             let full_bin_path_str = path + "/" + bin_name;
-
-            println!("{}", full_bin_path_str); // TODO remove
-
             bin_found = PathBuf::from(full_bin_path_str).exists();
 
             if bin_found {
@@ -121,13 +118,13 @@ mod tests {
         ]
     }
 
-    // Tests if paths can load into the shell
+    // Tests if shell can load any paths from the config file
     #[test]
     fn test_load_paths() {
         let mut shell = Shell::default();
         let def_paths_vec = create_default_path_vec();
         shell.load_paths(Some("test_config"), &def_paths_vec);
-        assert_eq!(shell.paths.len(), 2);
+        assert!(shell.paths.len() > 0);
     }
 
     // Tests if the shell can look for a file, in this case a binary, 
