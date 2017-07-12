@@ -1,4 +1,4 @@
-# Enayet Shell [![Build Status](https://travis-ci.org/afnanenayet/Enayet-Shell.svg?branch=master)](https://travis-ci.org/afnanenayet/Enayet-Shell)
+# Enayet Shell [![Build Status](https://travis-ci.org/afnanenayet/Enayet-Shell.svg?branch=master)](https://travis-ci.org/afnanenayet/Enayet-Shell) [![Coverage Status](https://coveralls.io/repos/github/afnanenayet/Enayet-Shell/badge.svg?branch=master)](https://coveralls.io/github/afnanenayet/Enayet-Shell?branch=master)
 
 The Enayet Shell is a pet project so that I can get familiar with Rust, and 
 have fun creating a shell (something I've been meaning to get to but never 
