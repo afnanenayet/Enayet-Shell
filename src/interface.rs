@@ -47,5 +47,32 @@ pub fn print_shell_prompt(prompt: &str, wd_str: &str) {
 // unit tests
 #[cfg(test)]
 mod tests {
+    use super::*;
+
+    // Tests if functions can properly print to STDOUT
+    #[test]
+    fn test_print_stdout() {
+        print_out("test");
+    }
+
+    // Tests if function can properly print to STDERR
+    #[test]
+    fn test_print_stderr() {
+        print_err("test");
+    }
+
+    // Tests if function can print shell prompt to STDOUT
+    #[test]
+    fn test_print_sh_prompt() {
+        print_shell_prompt(">", "test");
+    }
+
+    // Tests if retrieving input from stdin can occur without panic
+    /*
+    #[test]
+    fn test_get_input() {
+        get_input("test: ", "working dir");
+    }
+    */
 }
 
