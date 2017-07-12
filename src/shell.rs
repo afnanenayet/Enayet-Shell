@@ -114,6 +114,7 @@ mod tests {
         vec![
             "/usr/bin".to_string(),
             "/usr/local/bin".to_string(),
+            "/bin/".to_string(),
         ]
     }
 
@@ -140,7 +141,7 @@ mod tests {
         let mut shell = Shell::default();
         let def_paths_vec = create_default_path_vec();
         shell.paths = def_paths_vec;
-        assert!(shell.find_bin("top"));
+        assert!(shell.find_bin("cat"));
     }
 
     // tests to see if the shell can properly change working directories
