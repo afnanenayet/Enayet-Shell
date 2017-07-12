@@ -1,6 +1,7 @@
 # Travis CI config for Enayet Shell
 # Tests if shell can build properly
 language: rust
+cache: cargo
 
 # Travis will run cargo build and cargo test by default
 
