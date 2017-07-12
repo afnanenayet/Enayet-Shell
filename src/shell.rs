@@ -49,7 +49,7 @@ impl Shell {
     // Change the shell's working directory. Will return an a boolean 
     // indicating whether the working directory was successfully changed
     // or not
-    fn change_working_dir(&mut self, wd: &str) -> bool {
+    pub fn change_working_dir(&mut self, wd: &str) -> bool {
         let path_obj = PathBuf::from(wd);
 
         // Only change wd if it exists
@@ -63,18 +63,18 @@ impl Shell {
 
     // Returns the number of commands that have already been inputted to the 
     // shell
-    fn input_count(&self) -> u64 {
+    pub fn input_count(&self) -> u64 {
         self.input_history.len() as u64
     }
 
     // Conveys raw input/command to the shell
-    fn cmd(&mut self, input: &str) {
+    pub fn cmd(&mut self, input: &str) {
         let path_obj = PathBuf::from(input);
     }
 
     // Detects whether the binary exists, searching the paths that were loaded
     // from the config file
-    fn find_bin(&self, bin_name: &str) -> bool {
+    pub fn find_bin(&self, bin_name: &str) -> bool {
         let mut bin_found = false;
 
         // Searching every path in the paths vector for the binary
@@ -90,13 +90,13 @@ impl Shell {
     }
 
     // Set include paths for shell using path strings
-    fn set_paths(&mut self, paths: Vec<String>) {
+    pub fn set_paths(&mut self, paths: Vec<String>) {
         self.paths = paths;
     }
 
     // Set include paths from a config file. Pass in a string with the path to 
     // the config file
-    fn load_paths(&mut self, config_path: Option<&str>, 
+    pub fn load_paths(&mut self, config_path: Option<&str>, 
                   default_paths: &Vec<String>) {
         self.paths = parser::config::load_paths_from_config(config_path, 
                                                             &default_paths); 
