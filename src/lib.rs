@@ -1,16 +1,23 @@
-/// lib.rs    Afnan Enayet
+/// lib.rs    
+/// 
+/// # Author
+/// Afnan Enayet
+///
 /// # Synopsis
 /// The lib.rs file contains the main logic for the program. It assumes the 
 /// comand line parameters that are passed in are valid (they should be verified 
 /// in `main.rs`).
 /// This also contains the arguments struct and its implementation. This allows
 /// for the required arguments to be changed without much refactoring
+///
 
-use std::error::Error;
-
+mod consts;
 mod interface;
 mod parser;
 mod shell;
+
+use shell::Shell;
+use consts::*;
 
 // Program wide constants
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
@@ -31,8 +38,17 @@ impl Args {
 
 // Main entry point for program 
 pub fn run(args: Args) {
-    init_shell();
-    while shell_loop() {}
+    // Convert from Option<String> to Option<&str>
+    let config_fp: Option<&str> = match args.config_file_path.as_ref() {
+        Some(s) => Some(s),
+        None => None,
+    };
+
+    // Initialize shell and load config
+    let mut shell = init_shell(config_fp);
+
+    // Run everything that needs to run while the shell is operating
+    while shell_loop(&mut shell) {}
     shell_exit(0);
 }
 
@@ -40,23 +56,28 @@ pub fn run(args: Args) {
 // If no config file was given, search for default config file path. If 
 // default does not exist, create a default config file with default 
 // paths
-fn init_shell() -> Result<(), Box<Error>> {
+fn init_shell(config_fp: Option<&str>) -> Shell {
     println!("Enayet Shell | v{}", VERSION);
     
-    // TODO initialize shell, load options from config file
-    Ok(())
+    // Initialize shell and load config options from file
+    let mut shell = Shell::default();
+    let mut def_path_vec: Vec<String> = Vec::new(); 
+    
+    for path in DEFAULT_PATHS {
+        def_path_vec.push(path.to_string());
+    }
+
+    shell.load_paths(config_fp, &def_path_vec);
+    shell
 }
 
 // Captures input from stdin and executes commands from 
-fn shell_loop() -> bool {
+fn shell_loop(shell: &mut Shell) -> bool {
     let exit_code = "exit".to_string();
-
-    // TODO move these to Shell struct
-    let shell_prompt = ">";
     let working_dir = "~";
 
     // Get command from user
-    let input = interface::get_input(shell_prompt, working_dir);
+    let input = interface::get_input(SHELL_PROMPT, working_dir);
 
     // Exit if necessary 
     if input != exit_code {
