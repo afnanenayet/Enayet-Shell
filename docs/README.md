@@ -1,4 +1,5 @@
-# Enayet Shell [![Build Status](https://travis-ci.org/afnanenayet/Enayet-Shell.svg?branch=master)](https://travis-ci.org/afnanenayet/Enayet-Shell)
+# Enayet Shell 
+[![Build Status](https://travis-ci.org/afnanenayet/Enayet-Shell.svg?branch=master)](https://travis-ci.org/afnanenayet/Enayet-Shell)
 [![codecov](https://codecov.io/gh/afnanenayet/Enayet-Shell/branch/master/graph/badge.svg)](https://codecov.io/gh/afnanenayet/Enayet-Shell)
 
 The Enayet Shell is a pet project so that I can get familiar with Rust, and 
