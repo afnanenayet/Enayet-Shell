@@ -19,4 +19,9 @@ pub const DEFAULT_PATHS: &'static [&'static str] = &[
     "/bin",
 ];
 
+// The shell prompt that precedes each input prompt
 pub const SHELL_PROMPT: &'static str = ">";
+
+// Default file path for config file
+pub const DEFAULT_CONFIG_PATH: &'static str = "~/.ensh_config";
+

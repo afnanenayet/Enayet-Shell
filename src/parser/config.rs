@@ -8,7 +8,7 @@ use std::fs::{self, File, OpenOptions};
 use std::path::{Path};
 use std::io::{Write, BufReader, BufRead};
 
-use consts::DEFAULT_PATHS;
+use consts::{DEFAULT_PATHS, DEFAULT_CONFIG_PATH};
 
 // Loads a list of include paths from the config file. The function takes 
 // an optional string argument. If the argument is not present or the 
@@ -17,14 +17,12 @@ use consts::DEFAULT_PATHS;
 // will create a default config file in the default path
 pub fn load_paths_from_config(config_path: Option<&str>, 
                               def_paths: &Vec<String>) -> Vec<String> {
-    let default_config_path = "~/.ensh_config";
-
     // Try to load given path, or use default if no string was supplied
-    let config_path = config_path.unwrap_or(default_config_path);
+    let config_path = config_path.unwrap_or(DEFAULT_CONFIG_PATH);
 
     // See if the file can be opened
     // let file = File::open(config_path);
-    let default_exists = Path::new(default_config_path).exists();
+    let default_exists = Path::new(DEFAULT_CONFIG_PATH).exists();
 
     // Open the default file if the supplied location fails
     let file = match File::open(config_path) {
@@ -33,10 +31,10 @@ pub fn load_paths_from_config(config_path: Option<&str>,
             // Try to read from default config
             // Create a new default config if necessary
             if default_exists {
-                File::open(default_config_path).unwrap()
+                File::open(DEFAULT_CONFIG_PATH).unwrap()
             } else {
-                create_default_config(default_config_path, def_paths).unwrap();
-                File::open(default_config_path).unwrap()
+                create_default_config(DEFAULT_CONFIG_PATH, def_paths).unwrap();
+                File::open(DEFAULT_CONFIG_PATH).unwrap()
             }
         }
     };
