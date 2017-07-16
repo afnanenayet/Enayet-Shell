@@ -7,8 +7,9 @@ use std::io;
 use std::fs::{self, File, OpenOptions};
 use std::path::{Path};
 use std::io::{Write, BufReader, BufRead};
+use std::env::home_dir;
 
-use consts::{DEFAULT_PATHS, DEFAULT_CONFIG_PATH};
+use consts::{DEFAULT_PATHS, DEF_CONFIG_FNAME};
 
 // Loads a list of include paths from the config file. The function takes 
 // an optional string argument. If the argument is not present or the 
@@ -18,11 +19,11 @@ use consts::{DEFAULT_PATHS, DEFAULT_CONFIG_PATH};
 pub fn load_paths_from_config(config_path: Option<&str>, 
                               def_paths: &Vec<String>) -> Vec<String> {
     // Try to load given path, or use default if no string was supplied
-    let config_path = config_path.unwrap_or(DEFAULT_CONFIG_PATH);
+    let config_path = config_path.unwrap_or(DEF_CONFIG_FNAME);
 
     // See if the file can be opened
     // let file = File::open(config_path);
-    let default_exists = Path::new(DEFAULT_CONFIG_PATH).exists();
+    let default_exists = Path::new(DEF_CONFIG_FNAME).exists();
 
     // Open the default file if the supplied location fails
     let file = match File::open(config_path) {
@@ -31,10 +32,10 @@ pub fn load_paths_from_config(config_path: Option<&str>,
             // Try to read from default config
             // Create a new default config if necessary
             if default_exists {
-                File::open(DEFAULT_CONFIG_PATH).unwrap()
+                File::open(DEF_CONFIG_FNAME).unwrap()
             } else {
-                create_default_config(DEFAULT_CONFIG_PATH, def_paths).unwrap();
-                File::open(DEFAULT_CONFIG_PATH).unwrap()
+                create_default_config(DEF_CONFIG_FNAME, def_paths).unwrap();
+                File::open(DEF_CONFIG_FNAME).unwrap()
             }
         }
     };
@@ -57,11 +58,12 @@ pub fn load_paths_from_config(config_path: Option<&str>,
 
 // Creates the default configuration file in the default location. Will 
 // panic if for some reason cannot write default config to path
-fn create_default_config(file_path: &str, def_paths: &Vec<String>) 
+fn create_default_config(file_name: &str, def_paths: &Vec<String>) 
     -> Result<(), io::Error> {
-        // Need to use openoptions to write ot a file (the regular create file
+        // Need to use openoptions to write to a file (the regular create file
         // creates a file in read-only mode)
-        let path_obj = Path::new(file_path);
+        let path_str_raw = home_dir().unwrap().display().to_string() + "/" + file_name;
+        let path_obj = Path::new(&path_str_raw[..]);
         path_obj.canonicalize();
         let mut path_str = path_obj.to_str().unwrap();
         let mut file = File::create(path_str)?;
@@ -71,7 +73,8 @@ fn create_default_config(file_path: &str, def_paths: &Vec<String>)
             file.write(line.as_bytes())?; 
             file.write("\n".as_bytes())?;
         }
-        file.sync_all()?;
+
+        file.sync_all().unwrap();
         Ok(())
     }
 
@@ -131,8 +134,7 @@ mod tests {
         for path in DEFAULT_PATHS {
             default_paths.push(path.to_string());
         }
-
-        let paths = load_paths_from_config(None, &default_paths);
+        create_default_config(DEF_CONFIG_FNAME, &default_paths).unwrap();
     }
 }
 

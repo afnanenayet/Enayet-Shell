@@ -23,5 +23,5 @@ pub const DEFAULT_PATHS: &'static [&'static str] = &[
 pub const SHELL_PROMPT: &'static str = ">";
 
 // Default file path for config file
-pub const DEFAULT_CONFIG_PATH: &'static str = "~/.ensh_config";
+pub const DEF_CONFIG_FNAME: &'static str = ".ensh_config";
 
