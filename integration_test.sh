@@ -2,3 +2,4 @@
 
 # Check initialization
 cargo run
+
