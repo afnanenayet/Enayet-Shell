@@ -37,6 +37,9 @@ pub fn condense_path(path: &str) -> Result<String, io::Error> {
     let home_str = home.as_str();
 
     let path_str = path.replace(home_str, "~");
+    
+    // TODO get absolute path in order to check that the path 
+    // exists
     let result = PathBuf::from(path_str).canonicalize();
     
     // Check if path exists, if so, return string representation
