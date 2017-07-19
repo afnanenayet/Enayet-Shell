@@ -42,11 +42,7 @@ pub fn condense_path(path: &str) -> Result<String, io::Error> {
     let expanded_path = expand_path(path);
     let home = get_home_str().unwrap();
     let home_str = home.as_str();
-
     let path_str = path.replace(home_str, "~");
-    
-    // TODO get absolute path in order to check that the path 
-    // exists
     let result = PathBuf::from(expanded_path).canonicalize();
     
     // Check if path exists, if so, return string representation
@@ -80,7 +76,7 @@ mod tests {
     fn test_norm_abs_path_valid_path() {
         let path = "~";
         let abs_path = norm_abs_path(path).unwrap(); // this should not panic
-        let correct_abs_path = "/Users/aenayet";
+        let correct_abs_path = get_home_str().unwrap();
         assert_eq!(correct_abs_path, abs_path);
     }
 
@@ -109,9 +105,9 @@ mod tests {
     // Tests if path can be condensed with a valid path name
     #[test]
     fn test_condense_path_valid_path() {
-        let path = "/Users/aenayet/";
-        let correct_condensed_path = "~/";
-        let condensed_path = condense_path(path);
+        let path = get_home_str().unwrap();
+        let correct_condensed_path = "~";
+        let condensed_path = condense_path(path.as_str());
         assert_eq!(correct_condensed_path, condensed_path.unwrap());
     }
 
