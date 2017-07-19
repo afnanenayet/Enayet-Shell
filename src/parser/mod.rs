@@ -18,10 +18,8 @@ pub mod config;
 //
 // Ex: ~/example -> /Users/user/example
 pub fn norm_abs_path(path: &str) -> Result<String, io::Error> {
-    let home_pb = home_dir().unwrap();
-    let home_str: &str = home_pb.to_str().unwrap();
-    let path_str = path.replace("~", home_str);
-    let path = PathBuf::from(path_str).canonicalize();
+    let expanded_path = expand_path(path);
+    let path = PathBuf::from(expanded_path).canonicalize();
 
     // If path exists
     match path {
@@ -30,9 +28,18 @@ pub fn norm_abs_path(path: &str) -> Result<String, io::Error> {
     } 
 }
 
+// Simply replaces a "~" in a path string with the $HOME value
+// Will fail if there is no $HOME defined in the user's path
+fn expand_path(path: &str) -> String {
+    let home_dir = home_dir().unwrap();
+    let home_str = home_dir.to_str().unwrap();
+    path.replace("~", home_str)
+}
+
 // Condenses a path so that an absolute path is condensed and normalized 
 // to a path relative to the home directory
 pub fn condense_path(path: &str) -> Result<String, io::Error> {
+    let expanded_path = expand_path(path);
     let home = get_home_str().unwrap();
     let home_str = home.as_str();
 
@@ -40,11 +47,11 @@ pub fn condense_path(path: &str) -> Result<String, io::Error> {
     
     // TODO get absolute path in order to check that the path 
     // exists
-    let result = PathBuf::from(path_str).canonicalize();
+    let result = PathBuf::from(expanded_path).canonicalize();
     
     // Check if path exists, if so, return string representation
     match result {
-        Ok(path) => Ok(path.as_os_str().to_str().unwrap().to_string()),
+        Ok(path) => Ok(path_str),
         Err(e) => Err(e),
     }
 }
@@ -103,7 +110,7 @@ mod tests {
     #[test]
     fn test_condense_path_valid_path() {
         let path = "/Users/aenayet/";
-        let correct_condensed_path = "~";
+        let correct_condensed_path = "~/";
         let condensed_path = condense_path(path);
         assert_eq!(correct_condensed_path, condensed_path.unwrap());
     }
