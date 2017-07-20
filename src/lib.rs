@@ -18,6 +18,7 @@ mod shell;
 
 use shell::Shell;
 use consts::*;
+use parser::norm_abs_path;
 
 // Program wide constants
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
@@ -58,6 +59,11 @@ pub fn run(args: Args) {
 // paths
 fn init_shell(config_fp: Option<&str>) -> Shell {
     println!("Enayet Shell | v{}", VERSION);
+
+    let normalized_fp = match config_fp {
+        Some(s) => norm_abs_path(s).unwrap(),
+        None => norm_abs_path("~/.ensh_config").unwrap(),
+    };
     
     // Initialize shell and load config options from file
     let mut shell = Shell::default();
@@ -93,3 +99,14 @@ fn shell_exit(exit_status: i32) {
     std::process::exit(exit_status);
 }
 
+// Unit tests
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    // Test that shell can be initialized properly
+    #[test]
+    fn test_init_shell() {
+        let shell = init_shell(None);
+    }
+}

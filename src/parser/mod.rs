@@ -8,9 +8,16 @@
 
 use std::io;
 use std::env::home_dir;
-use std::path::PathBuf;
+use std::path::{PathBuf, Path};
 
 pub mod config;
+
+// Checks to see if path/file exists. Returns whether path string is 
+// valid and points to something the shell can access
+pub fn verify_path(path: &str) -> bool {
+    let full_path = expand_path(path);
+    Path::new(full_path.as_str()).exists()
+}
 
 // Normalizes and expands path to its full absolute path, for use with 
 // Rust's filesystem code. If path is invalid, inaccessible, or 
@@ -19,7 +26,7 @@ pub mod config;
 // Ex: ~/example -> /Users/user/example
 pub fn norm_abs_path(path: &str) -> Result<String, io::Error> {
     let expanded_path = expand_path(path);
-    let path = PathBuf::from(expanded_path).canonicalize();
+    let path = Path::new(expanded_path.as_str()).canonicalize();
 
     // If path exists
     match path {
@@ -43,7 +50,7 @@ pub fn condense_path(path: &str) -> Result<String, io::Error> {
     let home = get_home_str().unwrap();
     let home_str = home.as_str();
     let path_str = path.replace(home_str, "~");
-    let result = PathBuf::from(expanded_path).canonicalize();
+    let result = Path::new(expanded_path.as_str()).canonicalize();
     
     // Check if path exists, if so, return string representation
     match result {
