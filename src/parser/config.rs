@@ -8,7 +8,6 @@ use std::fs::{self, File, OpenOptions};
 use std::path::{Path};
 use std::io::{Write, BufReader, BufRead};
 use std::env::home_dir;
-
 use consts::{DEFAULT_PATHS, DEF_CONFIG_FNAME};
 
 // Loads a list of include paths from the config file. The function takes 
@@ -58,23 +57,21 @@ pub fn load_paths_from_config(config_path: Option<&str>,
 
 // Creates the default configuration file in the default location. Will 
 // panic if for some reason cannot write default config to path
-fn create_default_config(file_name: &str, def_paths: &Vec<String>) 
+fn create_default_config(file_path: &str, def_paths: &Vec<String>) 
     -> Result<(), io::Error> {
         // Need to use openoptions to write to a file (the regular create file
         // creates a file in read-only mode)
-        let path_str_raw = home_dir().unwrap().display().to_string() + "/" + file_name;
-        let path_obj = Path::new(&path_str_raw[..]);
+        let path_obj = Path::new(file_path);
         path_obj.canonicalize();
-        let mut path_str = path_obj.to_str().unwrap();
+        let path_str = path_obj.to_str().unwrap();
         let mut file = File::create(path_str)?;
 
         // Write each path into the config file
         for line in def_paths {
-            file.write(line.as_bytes())?; 
+            file.write(line.as_bytes())?;
             file.write("\n".as_bytes())?;
         }
-
-        file.sync_all().unwrap();
+        file.sync_all()?;
         Ok(())
     }
 
@@ -101,8 +98,7 @@ mod tests {
     #[test]
     fn test_write_config_fs() {
         let default_paths = create_def_paths();
-        create_default_config("test_config", &default_paths)
-            .expect("Unable to write file");
+        create_default_config("test_config_write", &default_paths).unwrap();
     }
 
     // Test if the shell can read a config file from the filesystem
@@ -121,7 +117,7 @@ mod tests {
         create_default_config(config_path, &default_paths)
             .expect("Unable to write config file");
         let paths = load_paths_from_config(Some(config_path), &default_paths);
-        assert_eq!(paths.len(), 2);
+        assert_eq!(paths.len(), default_paths.len());
     }
 
     // Tests that function can create the default config if no config path is 
