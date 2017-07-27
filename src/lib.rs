@@ -107,6 +107,6 @@ mod tests {
     // Test that shell can be initialized properly
     #[test]
     fn test_init_shell() {
-        let shell = init_shell(None);
+        // let mut shell = init_shell(None)?;
     }
 }
