@@ -121,7 +121,7 @@ mod tests {
     // Check if shell initializes properly
     #[test]
     fn test_default_shell_init() {
-        let shell = Shell::default();
+        // let shell = Shell::default();
     }
 
     // Tests if shell can load any paths from the config file
