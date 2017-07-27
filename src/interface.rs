@@ -68,6 +68,8 @@ mod tests {
     }
 
     // Tests if retrieving input from stdin can occur without panic
+    // TODO see if there's any way to run a unit test taking stdin 
+    // with cargo
     /*
     #[test]
     fn test_get_input() {
