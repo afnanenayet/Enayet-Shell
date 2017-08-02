@@ -15,6 +15,7 @@ mod consts;
 mod interface;
 mod parser;
 mod shell;
+mod cmd_dispatch;
 
 use shell::Shell;
 use consts::*;
