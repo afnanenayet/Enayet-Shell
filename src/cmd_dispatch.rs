@@ -7,7 +7,8 @@
 ///
 /// The command dispatch module contains internal commands/utilities for the 
 /// shell. This includes utilities like `cd`. These commands perform an action 
-/// on a Shell object
+/// on a Shell object. It will determine whether a function is an internal shell 
+/// function, or a binary that needs to be executed through another process.
 ///
 
 use shell::Shell;
@@ -15,9 +16,25 @@ use parser::norm_abs_path;
 use std::path::PathBuf;
 
 // Dispatches a command based on some sanitized input string (ex: "cd ~")
-pub fn dispatch(command: &str) -> bool {
-    match {
+pub fn dispatch(shell: &mut Shell, command: &str) -> bool {
+    // Tokenize command, splitting into words and spaces
+    let tok_cmd = command.split(" ").collect::<Vec<_>>();
+
+    // Execute internal function if necessary
+    match tok_cmd[0] {
+        "cd" => cd(tok_cmd[1], shell),
+        _ => ex_bin(command),
     }
+}
+
+// Executes a binary/program that is present in the shell's path
+// Returns whether the operation was successful
+pub fn ex_bin(bin_name: &str) -> bool {
+    // TODO
+    // if binary is found in one of the shell's include directories, 
+    // execute binary with argument, spawn process, etc
+    // otherwise return false
+    false // TODO change
 }
 
 // Changes the working directory of a Shell object to the path referenced by 
