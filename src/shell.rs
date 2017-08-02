@@ -61,6 +61,11 @@ impl Shell {
         }
     }
 
+    // Returns a string representation of the shell's current working directory
+    pub fn get_cwd(&self) -> &str {
+        self.working_dir.to_str().unwrap()
+    }
+
     // Returns the number of commands that have already been inputted to the 
     // shell
     pub fn input_count(&self) -> u64 {
@@ -152,6 +157,14 @@ mod tests {
         let def_paths_vec = create_default_path_vec();
         shell.paths = def_paths_vec;
         assert!(shell.change_working_dir("/"));
+    }
+
+    // Tests that the working directory of the shell is properly output as a string
+    #[test]
+    fn test_print_wd() {
+        let mut shell = Shell::default();
+        shell.change_working_dir("~");
+        assert_eq!(shell.get_cwd(), "~");
     }
 }
 

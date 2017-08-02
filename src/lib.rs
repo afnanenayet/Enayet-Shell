@@ -20,6 +20,7 @@ mod cmd_dispatch;
 use shell::Shell;
 use consts::*;
 use parser::norm_abs_path;
+use cmd_dispatch::dispatch;
 
 // Program wide constants
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
@@ -81,14 +82,19 @@ fn init_shell(config_fp: Option<&str>) -> Shell {
 // Captures input from stdin and executes commands from 
 fn shell_loop(shell: &mut Shell) -> bool {
     let exit_code = "exit".to_string();
-    let working_dir = "~";
+    let working_dir = shell.get_cwd();
 
     // Get command from user
     let input = interface::get_input(SHELL_PROMPT, working_dir);
 
     // Exit if necessary 
     if input != exit_code {
-        println!("cmd: {}", input); // TODO replace with command dispatch
+        // TODO update with actual output as necessary
+        if cmd_dispatch::dispatch(shell, input.as_str()) {
+            println!("Command was successful");
+        } else {
+            println!("Command failed");
+        }
         true
     } else {
         false
