@@ -95,6 +95,7 @@ fn shell_loop(shell: &mut Shell) -> bool {
         } else {
             println!("Command failed");
         }
+        println!(""); // print blank line
         true
     } else {
         false
