@@ -82,15 +82,15 @@ fn init_shell(config_fp: Option<&str>) -> Shell {
 // Captures input from stdin and executes commands from 
 fn shell_loop(shell: &mut Shell) -> bool {
     let exit_code = "exit".to_string();
-    let working_dir = shell.get_cwd();
+    let working_dir = shell.get_cwd().to_owned();
 
     // Get command from user
-    let input = interface::get_input(SHELL_PROMPT, working_dir);
+    let input = interface::get_input(SHELL_PROMPT, &working_dir[..]);
 
     // Exit if necessary 
     if input != exit_code {
         // TODO update with actual output as necessary
-        if cmd_dispatch::dispatch(shell, input.as_str()) {
+        if cmd_dispatch::dispatch(shell, &input[..]) {
             println!("Command was successful");
         } else {
             println!("Command failed");
