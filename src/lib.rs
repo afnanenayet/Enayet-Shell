@@ -61,6 +61,7 @@ pub fn run(args: Args) {
 // paths
 fn init_shell(config_fp: Option<&str>) -> Shell {
     println!("Enayet Shell | v{}", VERSION);
+    println!("");
 
     let normalized_fp = match config_fp {
         Some(s) => norm_abs_path(s).unwrap(),
@@ -76,10 +77,17 @@ fn init_shell(config_fp: Option<&str>) -> Shell {
     }
 
     shell.load_paths(config_fp, &def_path_vec);
+
+    // Set working directory to home or "/" if it fails
+    if !cmd_dispatch::dispatch(&mut shell, "cd ~") {
+        cmd_dispatch::dispatch(&mut shell, "cd /");
+    }
     shell
 }
 
-// Captures input from stdin and executes commands from 
+// Captures input from stdin and executes commands from input
+// displays output to shell as necessary. Returns if shell should 
+// be terminated or continue for another loop iteration
 fn shell_loop(shell: &mut Shell) -> bool {
     let exit_code = "exit".to_string();
     let working_dir = shell.get_cwd().to_owned();
@@ -95,7 +103,7 @@ fn shell_loop(shell: &mut Shell) -> bool {
         } else {
             println!("Command failed");
         }
-        println!(""); // print blank line
+        println!(""); 
         true
     } else {
         false
