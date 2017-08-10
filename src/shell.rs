@@ -12,11 +12,13 @@
 /// * the PATH directories
 ///
 /// This object is used to represent a shell session and hold shell state 
-/// information
+/// information. It's important to note that this module has side effects 
+/// and will affect the environment's working directory as a side effect 
+/// of changing the shell's working directory
 
 use std::path::PathBuf;
 use std::fs::File;
-use std::io;
+use std::{io, env};
 
 use parser;
 
@@ -53,7 +55,7 @@ impl Shell {
         let path_obj = PathBuf::from(wd);
 
         // Only change wd if it exists
-        if path_obj.exists() {
+        if env::set_current_dir(&path_obj).is_ok() {
             self.working_dir = path_obj;
             true
         } else {
