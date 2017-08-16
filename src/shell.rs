@@ -147,6 +147,7 @@ mod tests {
         let mut shell = Shell::default();
         let def_paths_vec = create_default_path_vec();
         shell.paths = def_paths_vec;
+        assert!(!shell.find_bin(""));
         assert!(shell.find_bin("cat"));
     }
 

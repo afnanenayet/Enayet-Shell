@@ -7,7 +7,7 @@ use std::io;
 use std::fs::{self, File};
 use std::path::{Path};
 use std::io::{Write, BufReader, BufRead};
-use consts::{DEF_CONFIG_FNAME};
+use consts::{DEF_CONFIG_FNAME, DEFAULT_PATHS};
 
 // Loads a list of include paths from the config file. The function takes 
 // an optional string argument. If the argument is not present or the 
