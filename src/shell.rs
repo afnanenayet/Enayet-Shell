@@ -17,8 +17,7 @@
 /// of changing the shell's working directory
 
 use std::path::PathBuf;
-use std::fs::File;
-use std::{io, env};
+use std::env;
 
 use parser;
 

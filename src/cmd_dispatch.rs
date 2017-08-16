@@ -13,7 +13,8 @@
 
 use shell::Shell;
 use parser::norm_abs_path;
-use std::path::PathBuf;
+use std::process::Command;
+use std::str::from_utf8;
 
 // Dispatches a command based on some sanitized input string (ex: "cd ~")
 pub fn dispatch(shell: &mut Shell, cmd: &str) -> bool {
@@ -30,7 +31,6 @@ pub fn dispatch(shell: &mut Shell, cmd: &str) -> bool {
 // Executes a binary/program that is present in the shell's path
 // Returns whether the operation was successful
 fn ex_bin(cmd: &str, shell: &mut Shell) -> bool {
-    // TODO
     // if binary is found in one of the shell's include directories, 
     // execute binary with argument, spawn process, etc
     // otherwise return false
@@ -41,7 +41,18 @@ fn ex_bin(cmd: &str, shell: &mut Shell) -> bool {
     // look to see if binary exists. If it does, then execute command. Otherwise 
     // return false
     if shell.find_bin(tok_cmd[0]) {
-        true // TODO 
+        // TODO make this more modular, return output rather than printing directly 
+        // from here
+        let process = Command::new(tok_cmd[0])
+            .args(&tok_cmd[1..])
+            .output()
+            .expect("Failed to execute process");
+
+        let output_vec = process.stdout;
+        let output_str = from_utf8(&output_vec).unwrap();
+        print!("{}", output_str);
+        println!("");
+        true
     } else {
         false 
     }

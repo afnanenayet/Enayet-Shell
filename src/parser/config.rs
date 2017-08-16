@@ -4,11 +4,10 @@
 /// the configuration file for the shell 
 
 use std::io;
-use std::fs::{self, File, OpenOptions};
+use std::fs::{self, File};
 use std::path::{Path};
 use std::io::{Write, BufReader, BufRead};
-use std::env::home_dir;
-use consts::{DEFAULT_PATHS, DEF_CONFIG_FNAME};
+use consts::{DEF_CONFIG_FNAME};
 
 // Loads a list of include paths from the config file. The function takes 
 // an optional string argument. If the argument is not present or the 

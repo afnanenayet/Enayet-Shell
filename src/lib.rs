@@ -20,7 +20,6 @@ mod cmd_dispatch;
 use shell::Shell;
 use consts::*;
 use parser::norm_abs_path;
-use cmd_dispatch::dispatch;
 
 // Program wide constants
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
