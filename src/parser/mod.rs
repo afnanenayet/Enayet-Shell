@@ -8,7 +8,7 @@
 
 use std::io;
 use std::env::home_dir;
-use std::path::{PathBuf, Path};
+use std::path::Path;
 
 pub mod config;
 

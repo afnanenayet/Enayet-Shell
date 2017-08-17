@@ -27,7 +27,6 @@ use parser;
 #[derive(Debug)]
 #[derive(Default)]
 pub struct Shell {
-    // TODO 
     working_dir: PathBuf, // The current working directory 
     input_history: Vec<String>, // The user's input history
     output_count: u64, // The number of lines outputted
@@ -82,6 +81,12 @@ impl Shell {
     // from the config file
     pub fn find_bin(&self, bin_name: &str) -> bool {
         let mut bin_found = false;
+        let bin_name = bin_name.trim();
+        
+        // Don't accept blank names
+        if bin_name.is_empty() {
+            return false;
+        }
 
         // Searching every path in the paths vector for the binary
         for path in self.paths.clone() {
@@ -130,6 +135,14 @@ mod tests {
         let shell = Shell::default();
     }
 
+    //
+    #[bench]
+    fn bench_load_paths(b: &mut Bencher) {
+        let mut shell = Shell::default();
+        let def_paths_vec = create_default_path_vec();
+        shell.load_paths(Some("unit_test_files/config_r"), &def_paths_vec);
+    }
+
     // Tests if shell can load any paths from the config file
     #[test]
     fn test_load_paths() {
@@ -150,6 +163,28 @@ mod tests {
         assert!(!shell.find_bin(""));
         assert!(shell.find_bin("cat"));
     }
+
+    /* Will enable benchmarks when Rust makes them stable
+    // Check how fast binaries can be searched
+    #[bench]
+    fn bench_search_bin(b: &mut Bencher) {
+        let mut shell = Shell::default();
+        let def_paths_vec = create_default_path_vec();
+        shell.paths = def_paths_vec;
+        b.iter(|| shell.find_bin(""));
+        b.iter(|| shell.find_bin("cat"));
+    }
+
+    // benches to see if the shell can properly change working directories
+    #[bench]
+    fn bench_cwd(b: &mut Bencher) {
+        // Shell test setup
+        let mut shell = Shell::default();
+        let def_paths_vec = create_default_path_vec();
+        shell.paths = def_paths_vec;
+        b.iter(|| shell.change_working_dir("/"));
+    }
+    */
 
     // tests to see if the shell can properly change working directories
     #[test]
