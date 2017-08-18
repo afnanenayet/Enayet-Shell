@@ -135,13 +135,14 @@ mod tests {
         let shell = Shell::default();
     }
 
-    //
+    /*
     #[bench]
     fn bench_load_paths(b: &mut Bencher) {
         let mut shell = Shell::default();
         let def_paths_vec = create_default_path_vec();
         shell.load_paths(Some("unit_test_files/config_r"), &def_paths_vec);
     }
+    */
 
     // Tests if shell can load any paths from the config file
     #[test]
