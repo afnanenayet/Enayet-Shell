@@ -5,9 +5,9 @@
 ///
 /// # Summary
 ///
-/// The command dispatch module contains internal commands/utilities for the 
-/// shell. This includes utilities like `cd`. These commands perform an action 
-/// on a Shell object. It will determine whether a function is an internal shell 
+/// The command dispatch module contains internal commands/utilities for the
+/// shell. This includes utilities like `cd`. These commands perform an action
+/// on a Shell object. It will determine whether a function is an internal shell
 /// function, or a binary that needs to be executed through another process.
 ///
 
@@ -31,17 +31,17 @@ pub fn dispatch(shell: &mut Shell, cmd: &str) -> bool {
 // Executes a binary/program that is present in the shell's path
 // Returns whether the operation was successful
 fn ex_bin(cmd: &str, shell: &mut Shell) -> bool {
-    // if binary is found in one of the shell's include directories, 
+    // if binary is found in one of the shell's include directories,
     // execute binary with argument, spawn process, etc
     // otherwise return false
 
     // Tokenize command, splitting by space
     let tok_cmd = cmd.split(" ").collect::<Vec<_>>();
 
-    // look to see if binary exists. If it does, then execute command. Otherwise 
+    // look to see if binary exists. If it does, then execute command. Otherwise
     // return false
     if shell.find_bin(tok_cmd[0]) {
-        // TODO make this more modular, return output rather than printing directly 
+        // TODO make this more modular, return output rather than printing directly
         // from here
         let process = Command::new(tok_cmd[0])
             .args(&tok_cmd[1..])
@@ -54,17 +54,17 @@ fn ex_bin(cmd: &str, shell: &mut Shell) -> bool {
         println!("");
         true
     } else {
-        false 
+        false
     }
 }
 
-// Changes the working directory of a Shell object to the path referenced by 
-// the argument. Will return a boolean indicating whether the operation was 
+// Changes the working directory of a Shell object to the path referenced by
+// the argument. Will return a boolean indicating whether the operation was
 // successful
 fn cd(path: &str, shell: &mut Shell) -> bool {
     let abs_path = norm_abs_path(path);
 
-    // If path has an issue then return false, don't try 
+    // If path has an issue then return false, don't try
     if abs_path.is_err() {
         false
     } else {
@@ -83,12 +83,10 @@ mod tests {
 
     // Tests that shell's working directory can be changed to a valid path
     #[test]
-    fn test_cwd_valid_path() {
-    }
+    fn test_cwd_valid_path() {}
 
-    // Test that the shell's working directory can't be changed to an invalid 
+    // Test that the shell's working directory can't be changed to an invalid
     // path
     #[test]
-    fn test_cwd_invalid_path() {
-    }
+    fn test_cwd_invalid_path() {}
 }

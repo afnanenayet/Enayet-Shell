@@ -2,7 +2,7 @@
 ///
 /// Contains helper functions to help with parsing user input
 ///
-/// Mostly contains functions which help parse shell grammar and resolve 
+/// Mostly contains functions which help parse shell grammar and resolve
 /// pathnames
 ///
 
@@ -12,15 +12,15 @@ use std::path::Path;
 
 pub mod config;
 
-// Checks to see if path/file exists. Returns whether path string is 
+// Checks to see if path/file exists. Returns whether path string is
 // valid and points to something the shell can access
 pub fn verify_path(path: &str) -> bool {
     let full_path = expand_path(path);
     Path::new(full_path.as_str()).exists()
 }
 
-// Normalizes and expands path to its full absolute path, for use with 
-// Rust's filesystem code. If path is invalid, inaccessible, or 
+// Normalizes and expands path to its full absolute path, for use with
+// Rust's filesystem code. If path is invalid, inaccessible, or
 // nonexistent, the function will throw an error
 //
 // Ex: ~/example -> /Users/user/example
@@ -32,7 +32,7 @@ pub fn norm_abs_path(path: &str) -> Result<String, io::Error> {
     match path {
         Ok(path) => Ok(path.as_os_str().to_str().unwrap().to_string()),
         Err(e) => Err(e),
-    } 
+    }
 }
 
 // Simply replaces a "~" in a path string with the $HOME value
@@ -43,7 +43,7 @@ fn expand_path(path: &str) -> String {
     path.replace("~", home_str)
 }
 
-// Condenses a path so that an absolute path is condensed and normalized 
+// Condenses a path so that an absolute path is condensed and normalized
 // to a path relative to the home directory
 pub fn condense_path(path: &str) -> Result<String, io::Error> {
     let expanded_path = expand_path(path);
@@ -51,7 +51,7 @@ pub fn condense_path(path: &str) -> Result<String, io::Error> {
     let home_str = home.as_str();
     let path_str = path.replace(home_str, "~");
     let result = Path::new(expanded_path.as_str()).canonicalize();
-    
+
     // Check if path exists, if so, return string representation
     match result {
         Ok(path) => Ok(path_str),
@@ -59,17 +59,17 @@ pub fn condense_path(path: &str) -> Result<String, io::Error> {
     }
 }
 
-// Gets the string representation for the path to the home directory. In Unix, 
-// this is generally the HOME variable 
+// Gets the string representation for the path to the home directory. In Unix,
+// this is generally the HOME variable
 fn get_home_str() -> Option<String> {
     let home = home_dir();
 
-    // If home variable is found, convert path to string. Otherwise return 
+    // If home variable is found, convert path to string. Otherwise return
     // an error
     match home {
         Some(home) => Some(home.to_str().unwrap().to_string()),
         None => None,
-    } 
+    }
 }
 
 // Unit tests
@@ -77,7 +77,7 @@ fn get_home_str() -> Option<String> {
 mod tests {
     use super::*;
 
-    // Tests that the norm_abs_path can convert from a relative path to an 
+    // Tests that the norm_abs_path can convert from a relative path to an
     // absolute path, given a valid path as an input
     #[test]
     fn test_norm_abs_path_valid_path() {
@@ -100,7 +100,7 @@ mod tests {
         }
     }
 
-    // Tests norm_abs_path with a path that is already expanded and does not 
+    // Tests norm_abs_path with a path that is already expanded and does not
     // need to be expanded at all
     #[test]
     fn test_norm_abs_path_with_abs_path() {
@@ -130,7 +130,7 @@ mod tests {
         }
     }
 
-    // Tests if path condense works properly with a valid path that doesn't 
+    // Tests if path condense works properly with a valid path that doesn't
     // need to be condensed
     #[test]
     fn test_condense_path_already_condensed() {
@@ -146,4 +146,3 @@ mod tests {
         assert!(home_str.is_some());
     }
 }
-

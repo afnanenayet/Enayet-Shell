@@ -1,17 +1,13 @@
 /// interface.rs    Afnan Enayet
 ///
 /// The interface module handles most of the input/output for the shell
-/// In general, it takes input from STDIN and displays output to STDOUT and 
-/// STDERR and abstracts away some of the details like formatting and shell 
+/// In general, it takes input from STDIN and displays output to STDOUT and
+/// STDERR and abstracts away some of the details like formatting and shell
 /// prompts
 
-use std::io::{
-    self, 
-    Write, 
-    BufRead,
-};
+use std::io::{self, Write, BufRead};
 
-// Prints some given output to stdout 
+// Prints some given output to stdout
 pub fn print_out(output: &str) {
     println!("{}", output);
 }
@@ -22,8 +18,8 @@ pub fn print_err(output: &str) {
     r.expect("failed to print to stderr");
 }
 
-// Retrieves a line (delimited by the '\n' character) from stdin, will also 
-// print the shell prompt that prepends the input space. Note that this 
+// Retrieves a line (delimited by the '\n' character) from stdin, will also
+// print the shell prompt that prepends the input space. Note that this
 // operation can fail, leaving a None value
 pub fn get_input(prompt: &str, working_dir: &str) -> String {
     print_shell_prompt(prompt, working_dir);
@@ -31,8 +27,9 @@ pub fn get_input(prompt: &str, working_dir: &str) -> String {
     // Read line from stdin
     let mut input = String::new();
     let stdin = io::stdin();
-    stdin.lock().read_line(&mut input)
-        .expect("could not read from stdin");
+    stdin.lock().read_line(&mut input).expect(
+        "could not read from stdin",
+    );
     input.trim().to_string() // strip the newline
 }
 
@@ -77,4 +74,3 @@ mod tests {
     }
     */
 }
-

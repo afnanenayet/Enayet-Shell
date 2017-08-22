@@ -1,11 +1,11 @@
-/// lib.rs    
-/// 
+/// lib.rs
+///
 /// # Author
 /// Afnan Enayet
 ///
 /// # Synopsis
-/// The lib.rs file contains the main logic for the program. It assumes the 
-/// comand line parameters that are passed in are valid (they should be verified 
+/// The lib.rs file contains the main logic for the program. It assumes the
+/// comand line parameters that are passed in are valid (they should be verified
 /// in `main.rs`).
 /// This also contains the arguments struct and its implementation. This allows
 /// for the required arguments to be changed without much refactoring
@@ -32,13 +32,11 @@ pub struct Args {
 impl Args {
     pub fn new(args: Option<String>) -> Args {
         // Return struct with extracted arguments
-        Args {
-            config_file_path: args,
-        }
+        Args { config_file_path: args }
     }
 }
 
-// Main entry point for program 
+// Main entry point for program
 pub fn run(args: Args) {
     // Convert from Option<String> to Option<&str>
     let config_fp: Option<&str> = match args.config_file_path.as_ref() {
@@ -55,8 +53,8 @@ pub fn run(args: Args) {
 }
 
 // Initialize shell, using config file provided from arguments (if any)
-// If no config file was given, search for default config file path. If 
-// default does not exist, create a default config file with default 
+// If no config file was given, search for default config file path. If
+// default does not exist, create a default config file with default
 // paths
 fn init_shell(config_fp: Option<&str>) -> Shell {
     println!("Enayet Shell | v{}", VERSION);
@@ -66,11 +64,11 @@ fn init_shell(config_fp: Option<&str>) -> Shell {
         Some(s) => norm_abs_path(s).unwrap(),
         None => norm_abs_path("~/.ensh_config").unwrap(),
     };
-    
+
     // Initialize shell and load config options from file
     let mut shell = Shell::default();
-    let mut def_path_vec: Vec<String> = Vec::new(); 
-    
+    let mut def_path_vec: Vec<String> = Vec::new();
+
     for path in DEFAULT_PATHS {
         def_path_vec.push(path.to_string());
     }
@@ -85,7 +83,7 @@ fn init_shell(config_fp: Option<&str>) -> Shell {
 }
 
 // Captures input from stdin and executes commands from input
-// displays output to shell as necessary. Returns if shell should 
+// displays output to shell as necessary. Returns if shell should
 // be terminated or continue for another loop iteration
 fn shell_loop(shell: &mut Shell) -> bool {
     let exit_code = "exit".to_string();
@@ -94,7 +92,7 @@ fn shell_loop(shell: &mut Shell) -> bool {
     // Get command from user
     let input = interface::get_input(SHELL_PROMPT, &working_dir[..]);
 
-    // Exit if necessary 
+    // Exit if necessary
     if input != exit_code {
         // TODO update with actual output as necessary
         if cmd_dispatch::dispatch(shell, &input[..]) {
@@ -102,7 +100,7 @@ fn shell_loop(shell: &mut Shell) -> bool {
         } else {
             println!("Command failed");
         }
-        println!(""); 
+        println!("");
         true
     } else {
         false

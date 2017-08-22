@@ -1,19 +1,19 @@
-/// shell.rs    
+/// shell.rs
 ///
 /// # Author
 /// Afnan Enayet
 ///
 /// # Summary
 /// The ensh module provides a structure and implementation of a shell object.
-/// It contains state variables that the shell needs to keep track of, such as: 
+/// It contains state variables that the shell needs to keep track of, such as:
 /// * the current working directory
 /// * command history
 /// * the number of lines that have been input and output
 /// * the PATH directories
 ///
-/// This object is used to represent a shell session and hold shell state 
-/// information. It's important to note that this module has side effects 
-/// and will affect the environment's working directory as a side effect 
+/// This object is used to represent a shell session and hold shell state
+/// information. It's important to note that this module has side effects
+/// and will affect the environment's working directory as a side effect
 /// of changing the shell's working directory
 
 use std::path::PathBuf;
@@ -27,7 +27,7 @@ use parser;
 #[derive(Debug)]
 #[derive(Default)]
 pub struct Shell {
-    working_dir: PathBuf, // The current working directory 
+    working_dir: PathBuf, // The current working directory
     input_history: Vec<String>, // The user's input history
     output_count: u64, // The number of lines outputted
     paths: Vec<String>, // The paths the shell will search for binaries
@@ -35,18 +35,18 @@ pub struct Shell {
 
 // Methods for shell
 impl Shell {
-    // Default constructor for the shell. Will initialize with default 
+    // Default constructor for the shell. Will initialize with default
     // values and return a Shell struct
     fn default() -> Shell {
         Shell {
-            working_dir : PathBuf::from("~"),
-            input_history : Vec::new(),
-            output_count : 0,
-            paths : Vec::new(),
+            working_dir: PathBuf::from("~"),
+            input_history: Vec::new(),
+            output_count: 0,
+            paths: Vec::new(),
         }
     }
 
-    // Change the shell's working directory. Will return an a boolean 
+    // Change the shell's working directory. Will return an a boolean
     // indicating whether the working directory was successfully changed
     // or not
     pub fn change_working_dir(&mut self, wd: &str) -> bool {
@@ -66,7 +66,7 @@ impl Shell {
         self.working_dir.to_str().unwrap()
     }
 
-    // Returns the number of commands that have already been inputted to the 
+    // Returns the number of commands that have already been inputted to the
     // shell
     pub fn input_count(&self) -> u64 {
         self.input_history.len() as u64
@@ -82,7 +82,7 @@ impl Shell {
     pub fn find_bin(&self, bin_name: &str) -> bool {
         let mut bin_found = false;
         let bin_name = bin_name.trim();
-        
+
         // Don't accept blank names
         if bin_name.is_empty() {
             return false;
@@ -105,12 +105,10 @@ impl Shell {
         self.paths = paths;
     }
 
-    // Set include paths from a config file. Pass in a string with the path to 
+    // Set include paths from a config file. Pass in a string with the path to
     // the config file
-    pub fn load_paths(&mut self, config_path: Option<&str>, 
-                  default_paths: &Vec<String>) {
-        self.paths = parser::config::load_paths_from_config(config_path, 
-                                                            &default_paths); 
+    pub fn load_paths(&mut self, config_path: Option<&str>, default_paths: &Vec<String>) {
+        self.paths = parser::config::load_paths_from_config(config_path, &default_paths);
     }
 }
 
@@ -119,7 +117,7 @@ impl Shell {
 mod tests {
     use super::*;
 
-    // Returns a vector with some sample default paths for the purposes of 
+    // Returns a vector with some sample default paths for the purposes of
     // testing
     fn create_default_path_vec() -> Vec<String> {
         vec![
@@ -153,8 +151,8 @@ mod tests {
         assert!(shell.paths.len() > 0);
     }
 
-    // Tests if the shell can look for a file, in this case a binary, 
-    // searching the paths set for the shell. Assumes top is available 
+    // Tests if the shell can look for a file, in this case a binary,
+    // searching the paths set for the shell. Assumes top is available
     // in one of the paths
     #[test]
     fn test_search_bin() {
@@ -205,4 +203,3 @@ mod tests {
         assert_eq!(shell.get_cwd(), "~");
     }
 }
-
