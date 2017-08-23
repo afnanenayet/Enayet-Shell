@@ -2,6 +2,7 @@
 # Tests if shell can build properly
 language: rust
 cache: cargo
+sudo: true
 
 env:
   global:
