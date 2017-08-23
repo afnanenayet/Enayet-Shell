@@ -152,7 +152,7 @@ mod tests {
     }
 
     // Tests if the shell can look for a file, in this case a binary,
-    // searching the paths set for the shell. Assumes top is available
+    // searching the paths set for the shell. Assumes cat is available
     // in one of the paths
     #[test]
     fn test_search_bin() {
