@@ -29,7 +29,7 @@ pub fn get_input(prompt: &str, working_dir: &str) -> String {
     let stdin = io::stdin();
     stdin.lock().read_line(&mut input).expect(
         "could not read from stdin",
-    );
+        );
     input.trim().to_string() // strip the newline
 }
 
@@ -68,9 +68,9 @@ mod tests {
     // TODO see if there's any way to run a unit test taking stdin 
     // with cargo
     /*
-    #[test]
-    fn test_get_input() {
-        get_input("test: ", "working dir");
-    }
-    */
+       #[test]
+       fn test_get_input() {
+       get_input("test: ", "working dir");
+       }
+       */
 }

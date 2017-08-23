@@ -2,13 +2,13 @@
 /// Afnan Enayet, 2017
 ///
 /// # Configuration
-/// The main file serves as the entry point to the shell. The shell will loook 
+/// The main file serves as the entry point to the shell. The shell will loook
 /// at a config file, `~/.ensh_config`
 ///
 /// # Arguments
-/// * `config` - the configuration file to be loaded with this shell session. If 
-/// no argument is supplied, the shell will look for the default config file, 
-/// which is defined above. If it cannot find that configuration file, it will 
+/// * `config` - the configuration file to be loaded with this shell session. If
+/// no argument is supplied, the shell will look for the default config file,
+/// which is defined above. If it cannot find that configuration file, it will
 /// create a config file with the defaults. The config file contains include paths.
 /// The shell will search these paths for executables.
 ///
@@ -28,7 +28,7 @@ fn main() {
     // Command line args
     let mut args: Vec<String> = env::args().collect();
 
-    // Checking to see if argument was given, if not: 
+    // Checking to see if argument was given, if not:
     // make the arg_str a None
     let arg_str: Option<String> = match args.len() {
         1 => None,
@@ -39,4 +39,3 @@ fn main() {
     // Run program
     run(arg_struct);
 }
-
