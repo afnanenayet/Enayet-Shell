@@ -94,12 +94,9 @@ fn shell_loop(shell: &mut Shell) -> bool {
 
     // Exit if necessary
     if input != exit_code {
-        // TODO update with actual output as necessary
-        if cmd_dispatch::dispatch(shell, &input[..]) {
-            println!("Command was successful");
-        } else {
+        if !cmd_dispatch::dispatch(shell, &input[..]) {
             println!("Command failed");
-        }
+        } 
         println!("");
         true
     } else {
