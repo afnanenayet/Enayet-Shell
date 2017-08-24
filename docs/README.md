@@ -21,6 +21,23 @@ To modify or build this shell:
 Note that the shell must be built with Cargo so that the program knows what 
 version it is (as it is output when the shell is initialized)
 
+## Dependencies
+
+In order to create the shell, you will need to have the Rust language installed. 
+If you want to create the compressed version of the shell, you will need the 
+following dependencies installed and available in your `PATH`:
+
+    - gzip
+    - gzexe
+    - basename
+    - chmod 
+    - ln 
+    - mkdir 
+    - mktemp 
+    - rm 
+    - sleep
+    - tail
+
 # Usage
 The shell will be built as an executable. To run the shell
 
