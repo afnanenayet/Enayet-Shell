@@ -20,6 +20,7 @@ mod cmd_dispatch;
 use shell::Shell;
 use consts::*;
 use parser::norm_abs_path;
+use interface::print_out;
 
 // Program wide constants
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
@@ -57,8 +58,8 @@ pub fn run(args: Args) {
 // default does not exist, create a default config file with default
 // paths
 fn init_shell(config_fp: Option<&str>) -> Shell {
-    println!("Enayet Shell | v{}", VERSION);
-    println!("");
+    let initial_prompt = format!("Enayet Shell | v{}\n", VERSION);
+    print_out(initial_prompt.as_str());
 
     let normalized_fp = match config_fp {
         Some(s) => norm_abs_path(s).unwrap(),
@@ -73,6 +74,7 @@ fn init_shell(config_fp: Option<&str>) -> Shell {
         def_path_vec.push(path.to_string());
     }
 
+    // Load PATH(s) into shell
     shell.load_paths(config_fp, &def_path_vec);
 
     // Set working directory to home or "/" if it fails
@@ -95,9 +97,10 @@ fn shell_loop(shell: &mut Shell) -> bool {
     // Exit if necessary
     if input != exit_code {
         if !cmd_dispatch::dispatch(shell, &input[..]) {
-            println!("Command failed");
-        } 
-        println!("");
+            print_out(":(\n");
+        } else {
+            println!("");
+        }
         true
     } else {
         false
