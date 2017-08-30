@@ -13,7 +13,7 @@
 
 use shell::Shell;
 use parser::norm_abs_path;
-use std::process::Command;
+use std::process::{Command, Stdio};
 use std::str::from_utf8;
 
 // Dispatches a command based on some sanitized input string (ex: "cd ~")
@@ -28,7 +28,8 @@ pub fn dispatch(shell: &mut Shell, cmd: &str) -> bool {
     }
 }
 
-// Executes a binary/program that is present in the shell's path
+// Executes a binary/program that is present in the shell's path, prints output 
+// to stdout/stderr as necessary
 // Returns whether the operation was successful
 fn ex_bin(cmd: &str, shell: &mut Shell) -> bool {
     // if binary is found in one of the shell's include directories,
@@ -39,19 +40,26 @@ fn ex_bin(cmd: &str, shell: &mut Shell) -> bool {
     let tok_cmd = cmd.split(" ").collect::<Vec<_>>();
 
     // look to see if binary exists. If it does, then execute command. Otherwise
-    // return false
+    // return false. Let process take over stdio/stderr/stdout
     if shell.find_bin(tok_cmd[0]) {
-        // TODO make this more modular, return output rather than printing directly
-        // from here
         let process = Command::new(tok_cmd[0])
             .args(&tok_cmd[1..])
-            .output()
+            .stdin(Stdio::inherit())
+            .stdout(Stdio::inherit())
+            .stderr(Stdio::inherit())
+            .spawn()
             .expect("Failed to execute process");
 
-        let output_vec = process.stdout;
-        let output_str = from_utf8(&output_vec).unwrap();
+        // Getting output from process. Waiting ensures that the process 
+        // exits and doesn't become a zombie (Rust doesn't allow us to 
+        // drop a Command)
+        let output = process
+            .wait_with_output()
+            .expect("Failed to wait on child process");
+
+        // Printing any final output
+        let output_str = from_utf8(&output.stdout.as_slice()).unwrap();
         print!("{}", output_str);
-        println!("");
         true
     } else {
         false
