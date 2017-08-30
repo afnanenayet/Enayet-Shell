@@ -59,7 +59,7 @@ fn ex_bin(cmd: &str, shell: &mut Shell) -> bool {
 
         // Printing any final output
         let output_str = from_utf8(&output.stdout.as_slice()).unwrap();
-        print!("{}", output_str);
+        // println!("{}", output_str);
         true
     } else {
         false
