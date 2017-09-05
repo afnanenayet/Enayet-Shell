@@ -164,7 +164,6 @@ mod tests {
         shell.paths = def_paths_vec;
         b.iter(|| shell.change_working_dir("/"));
     }
-    */
 
     // tests to see if the shell can properly change working directories
     #[test]
