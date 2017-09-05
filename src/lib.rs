@@ -19,7 +19,7 @@ mod cmd_dispatch;
 
 use shell::Shell;
 use consts::*;
-use parser::norm_abs_path;
+use parser::expand_path;
 use interface::print_out;
 
 // Program wide constants
@@ -62,8 +62,8 @@ fn init_shell(config_fp: Option<&str>) -> Shell {
     print_out(initial_prompt.as_str());
 
     let normalized_fp = match config_fp {
-        Some(s) => norm_abs_path(s).unwrap(),
-        None => norm_abs_path("~/.ensh_config").unwrap(),
+        Some(s) => expand_path(s),
+        None => expand_path("~/.ensh_config"),
     };
 
     // Initialize shell and load config options from file
