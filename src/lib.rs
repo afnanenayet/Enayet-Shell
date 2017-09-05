@@ -74,7 +74,7 @@ fn init_shell(config_fp: Option<&str>) -> Shell {
         def_path_vec.push(path.to_string());
     }
 
-    // Load PATH(s) into shell
+    // Load PATH(S) into shell
     shell.load_paths(config_fp, &def_path_vec);
 
     // Set working directory to home or "/" if it fails
@@ -97,7 +97,7 @@ fn shell_loop(shell: &mut Shell) -> bool {
     // Exit if necessary
     if input != exit_code {
         if !cmd_dispatch::dispatch(shell, &input[..]) {
-            print_out(":(\n");
+            println!(":(\n");
         } else {
             println!("");
         }

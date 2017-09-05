@@ -21,8 +21,6 @@ use std::env;
 
 use parser;
 
-// The default configuration path
-
 // The struct that holds shell information
 #[derive(Debug)]
 #[derive(Default)]
@@ -39,7 +37,7 @@ impl Shell {
     // values and return a Shell struct
     fn default() -> Shell {
         Shell {
-            working_dir: PathBuf::from("~"),
+            working_dir: PathBuf::from("/"),
             input_history: Vec::new(),
             output_count: 0,
             paths: Vec::new(),
@@ -72,9 +70,12 @@ impl Shell {
         self.input_history.len() as u64
     }
 
-    // Conveys raw input/command to the shell
-    pub fn cmd(&mut self, input: &str) {
+    // Conveys raw input/command to the shell, returning if the command is 
+    // successful
+    // TODO
+    pub fn cmd(&mut self, input: &str) -> bool {
         let path_obj = PathBuf::from(input);
+        self
     }
 
     // Detects whether the binary exists, searching the paths that were loaded
@@ -133,15 +134,6 @@ mod tests {
         let shell = Shell::default();
     }
 
-    /*
-    #[bench]
-    fn bench_load_paths(b: &mut Bencher) {
-        let mut shell = Shell::default();
-        let def_paths_vec = create_default_path_vec();
-        shell.load_paths(Some("unit_test_files/config_r"), &def_paths_vec);
-    }
-    */
-
     // Tests if shell can load any paths from the config file
     #[test]
     fn test_load_paths() {
@@ -161,17 +153,6 @@ mod tests {
         shell.paths = def_paths_vec;
         assert!(!shell.find_bin(""));
         assert!(shell.find_bin("cat"));
-    }
-
-    /* Will enable benchmarks when Rust makes them stable
-    // Check how fast binaries can be searched
-    #[bench]
-    fn bench_search_bin(b: &mut Bencher) {
-        let mut shell = Shell::default();
-        let def_paths_vec = create_default_path_vec();
-        shell.paths = def_paths_vec;
-        b.iter(|| shell.find_bin(""));
-        b.iter(|| shell.find_bin("cat"));
     }
 
     // benches to see if the shell can properly change working directories
@@ -199,7 +180,7 @@ mod tests {
     #[test]
     fn test_print_wd() {
         let mut shell = Shell::default();
-        shell.change_working_dir("~");
-        assert_eq!(shell.get_cwd(), "~");
+        shell.change_working_dir("/");
+        assert_eq!(shell.get_cwd(), "/");
     }
 }
