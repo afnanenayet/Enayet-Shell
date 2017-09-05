@@ -28,7 +28,7 @@ pub fn dispatch(shell: &mut Shell, cmd: &str) -> bool {
     }
 }
 
-// Executes a binary/program that is present in the shell's path, prints output 
+// Executes a binary/program that is present in the shell's path, prints output
 // to stdout/stderr as necessary
 // Returns whether the operation was successful
 fn ex_bin(cmd: &str, shell: &mut Shell) -> bool {
@@ -50,12 +50,12 @@ fn ex_bin(cmd: &str, shell: &mut Shell) -> bool {
             .spawn()
             .expect("Failed to execute process");
 
-        // Getting output from process. Waiting ensures that the process 
-        // exits and doesn't become a zombie (Rust doesn't allow us to 
+        // Getting output from process. Waiting ensures that the process
+        // exits and doesn't become a zombie (Rust doesn't allow us to
         // drop a Command)
-        let output = process
-            .wait_with_output()
-            .expect("Failed to wait on child process");
+        let output = process.wait_with_output().expect(
+            "Failed to wait on child process",
+        );
 
         // Printing any final output
         let output_str = from_utf8(&output.stdout.as_slice()).unwrap();
