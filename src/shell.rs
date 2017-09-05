@@ -70,12 +70,12 @@ impl Shell {
         self.input_history.len() as u64
     }
 
-    // Conveys raw input/command to the shell, returning if the command is 
+    // Conveys raw input/command to the shell, returning if the command is
     // successful
     // TODO
     pub fn cmd(&mut self, input: &str) -> bool {
         let path_obj = PathBuf::from(input);
-        self
+        return true;
     }
 
     // Detects whether the binary exists, searching the paths that were loaded
@@ -153,16 +153,6 @@ mod tests {
         shell.paths = def_paths_vec;
         assert!(!shell.find_bin(""));
         assert!(shell.find_bin("cat"));
-    }
-
-    // benches to see if the shell can properly change working directories
-    #[bench]
-    fn bench_cwd(b: &mut Bencher) {
-        // Shell test setup
-        let mut shell = Shell::default();
-        let def_paths_vec = create_default_path_vec();
-        shell.paths = def_paths_vec;
-        b.iter(|| shell.change_working_dir("/"));
     }
 
     // tests to see if the shell can properly change working directories
