@@ -59,7 +59,6 @@ fn ex_bin(cmd: &str, shell: &mut Shell) -> bool {
 
         // Printing any final output
         let output_str = from_utf8(&output.stdout.as_slice()).unwrap();
-        // println!("{}", output_str);
         true
     } else {
         false
@@ -91,10 +90,16 @@ mod tests {
 
     // Tests that shell's working directory can be changed to a valid path
     #[test]
-    fn test_cwd_valid_path() {}
+    fn test_cwd_valid_path() {
+        let mut shell = initialize_shell();
+        assert!(cd("/", &mut shell));
+    }
 
     // Test that the shell's working directory can't be changed to an invalid
     // path
     #[test]
-    fn test_cwd_invalid_path() {}
+    fn test_cwd_invalid_path() {
+        let mut shell = initialize_shell();
+        assert!(!cd("nonexistent", &mut shell));
+    }
 }
