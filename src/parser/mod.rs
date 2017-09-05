@@ -37,7 +37,7 @@ pub fn norm_abs_path(path: &str) -> Result<String, io::Error> {
 
 // Simply replaces a "~" in a path string with the $HOME value
 // Will fail if there is no $HOME defined in the user's path
-fn expand_path(path: &str) -> String {
+pub fn expand_path(path: &str) -> String {
     let home_dir = home_dir().unwrap();
     let home_str = home_dir.to_str().unwrap();
     path.replace("~", home_str)

@@ -28,12 +28,10 @@ pub fn load_paths_from_config(config_path: Option<&str>, def_paths: &Vec<String>
         Err(_) => {
             // Try to read from default config
             // Create a new default config if necessary
-            if default_exists {
-                File::open(DEF_CONFIG_FNAME).unwrap()
-            } else {
+            if !default_exists {
                 create_default_config(DEF_CONFIG_FNAME, def_paths).unwrap();
-                File::open(DEF_CONFIG_FNAME).unwrap()
             }
+            File::open(DEF_CONFIG_FNAME).unwrap()
         }
     };
 
