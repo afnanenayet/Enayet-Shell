@@ -8,6 +8,7 @@
 cargo build --release
 
 # Compress the executable
+strip ./target/release/ensh
 gzexe ./target/release/ensh 
 
 # Retain original executable and rename the compressed executable 
