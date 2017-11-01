@@ -54,7 +54,7 @@ pub fn condense_path(path: &str) -> Result<String, io::Error> {
 
     // Check if path exists, if so, return string representation
     match result {
-        Ok(path) => Ok(path_str),
+        Ok(_) => Ok(path_str),
         Err(e) => Err(e),
     }
 }

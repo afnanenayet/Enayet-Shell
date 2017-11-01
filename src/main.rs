@@ -34,6 +34,7 @@ fn main() {
         1 => None,
         _ => Some(args.remove(1)),
     };
+
     let arg_struct: Args = Args::new(arg_str);
 
     // Run program
