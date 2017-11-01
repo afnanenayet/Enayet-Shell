@@ -93,7 +93,6 @@ mod tests {
         let tmp_dir = env::temp_dir();
         let default_paths = create_def_paths();
         let full_path = format!("{}/test_config_write", tmp_dir.to_str().unwrap());
-        println!("{}", full_path);
         create_default_config(&full_path, &default_paths).unwrap();
     }
 
@@ -101,6 +100,7 @@ mod tests {
     #[test]
     fn test_read_config_fs() {
         let tmp_dir = env::temp_dir(); 
+        test_write_config_fs(); // need to write file before we read it
         let path = format!("{}/test_config_write", tmp_dir.to_str().unwrap());
         let default_paths = create_def_paths();
         load_paths_from_config(Some(&path), &default_paths);
