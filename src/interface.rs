@@ -63,14 +63,4 @@ mod tests {
     fn test_print_sh_prompt() {
         print_shell_prompt(">", "test");
     }
-
-    // Tests if retrieving input from stdin can occur without panic
-    // TODO see if there's any way to run a unit test taking stdin
-    // with cargo
-    /*
-       #[test]
-       fn test_get_input() {
-       get_input("test: ", "working dir");
-       }
-       */
 }

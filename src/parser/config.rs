@@ -76,7 +76,6 @@ pub fn create_default_config(file_path: &str, def_paths: &Vec<String>) -> Result
 mod tests {
     use super::*;
     use std::env;
-    use std::fs::remove_file;
 
     // Returns a vector of default paths for use in tests
     fn create_def_paths() -> Vec<String> {
