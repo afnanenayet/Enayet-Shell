@@ -57,7 +57,7 @@ pub fn load_paths_from_config(config_path: Option<&str>, def_paths: &Vec<String>
 /// return error if for some reason cannot it cannot write default config to path
 /// Expects `file_path` to be a valid file path, since it cannot verify the path 
 /// of an unwritten file
-fn create_default_config(file_path: &str, def_paths: &Vec<String>) -> Result<(), io::Error> {
+pub fn create_default_config(file_path: &str, def_paths: &Vec<String>) -> Result<(), io::Error> {
     // Need to use openoptions to write to a file (the regular create file
     // creates a file in read-only mode)
     let mut file = File::create(file_path)?;
