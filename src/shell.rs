@@ -22,7 +22,7 @@ use std::env;
 use parser;
 
 /// A shell and its associated information is associated here, including
-/// the current working directory, the input history, and the paths that 
+/// the current working directory, the input history, and the paths that
 /// the shell will search
 #[derive(Debug)]
 #[derive(Default)]
@@ -107,6 +107,8 @@ impl Shell {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::env::temp_dir;
+    use super::parser::config::create_default_config;
 
     // Returns a vector with some sample default paths for the purposes of
     // testing
@@ -127,9 +129,15 @@ mod tests {
     // Tests if shell can load any paths from the config file
     #[test]
     fn test_load_paths() {
+        let mut tmp_dir: PathBuf = env::temp_dir();
+        tmp_dir.push("config_r");
         let mut shell = Shell::default();
+        // vector with paths we want to write
         let def_paths_vec = create_default_path_vec();
-        shell.load_paths(Some("unit_test_files/config_r"), &def_paths_vec);
+        let fp_str = tmp_dir.as_path().to_str().unwrap();
+
+        parser::config::create_default_config(&fp_str, &def_paths_vec);
+        shell.load_paths(Some(&fp_str), &def_paths_vec);
         assert!(shell.paths.len() > 0);
     }
 
