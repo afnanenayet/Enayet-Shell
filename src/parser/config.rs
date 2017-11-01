@@ -5,7 +5,7 @@
 /// to default directory or any other directory
 
 use std::io;
-use std::fs::{self, File};
+use std::fs::{File};
 use std::path::Path;
 use std::io::{Write, BufReader, BufRead};
 use consts::{DEF_CONFIG_FNAME, DEFAULT_PATHS};
