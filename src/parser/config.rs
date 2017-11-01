@@ -92,7 +92,7 @@ mod tests {
     fn test_write_config_fs() {
         let tmp_dir = env::temp_dir();
         let default_paths = create_def_paths();
-        let full_path = format!("{}test_config_write", tmp_dir.to_str().unwrap());
+        let full_path = format!("{}/test_config_write", tmp_dir.to_str().unwrap());
         println!("{}", full_path);
         create_default_config(&full_path, &default_paths).unwrap();
     }
@@ -101,7 +101,7 @@ mod tests {
     #[test]
     fn test_read_config_fs() {
         let tmp_dir = env::temp_dir(); 
-        let path = format!("{}test_config_write", tmp_dir.to_str().unwrap());
+        let path = format!("{}/test_config_write", tmp_dir.to_str().unwrap());
         let default_paths = create_def_paths();
         load_paths_from_config(Some(&path), &default_paths);
     }
@@ -111,7 +111,7 @@ mod tests {
     #[test]
     fn verify_read_write_config() {
         let tmp_dir = env::temp_dir();
-        let config_path = format!("{}test_config_rw", tmp_dir.to_str().unwrap());
+        let config_path = format!("{}/test_config_rw", tmp_dir.to_str().unwrap());
         let default_paths = create_def_paths();
         create_default_config(&config_path, &default_paths).expect("Unable to write config file");
         let paths = load_paths_from_config(Some(&config_path), &default_paths);
@@ -124,8 +124,7 @@ mod tests {
     fn test_create_def_config() {
         let mut default_paths = Vec::new();
         let tmp_fp = env::temp_dir();
-        let tmp_fp = format!("{}{}", tmp_fp.to_str().unwrap(), DEF_CONFIG_FNAME);
-        println!("temp file path: {}", tmp_fp); // TODO remove
+        let tmp_fp = format!("{}/{}", tmp_fp.to_str().unwrap(), DEF_CONFIG_FNAME);
 
         // Create vector for default path from array
         for path in DEFAULT_PATHS {
