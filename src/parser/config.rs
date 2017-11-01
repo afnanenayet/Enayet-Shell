@@ -19,19 +19,20 @@ pub fn load_paths_from_config(config_path: Option<&str>, def_paths: &Vec<String>
     // Try to load given path, or use default if no string was supplied
     let def_config_fp = format!("~/{}", DEF_CONFIG_FNAME);
     let config_path = config_path.unwrap_or(def_config_fp.as_str());
-    let config_path = super::norm_abs_path(config_path).unwrap();
+    let config_path = super::expand_path(config_path);
 
     // See if the file can be opened
-    let default_exists = Path::new(DEF_CONFIG_FNAME).exists();
+    let default_exists = Path::new(&config_path).exists();
 
     // Open the default file if the supplied location fails
+    // If the default file doesn't exist, create it
     let file = match File::open(&config_path) {
         Ok(file) => file,
         Err(_) => {
             // Try to read from default config
             // Create a new default config if necessary
             if !default_exists {
-                create_default_config(DEF_CONFIG_FNAME, def_paths).unwrap();
+                create_default_config(&config_path, def_paths).unwrap();
             }
             File::open(DEF_CONFIG_FNAME).unwrap()
         }
@@ -55,7 +56,7 @@ pub fn load_paths_from_config(config_path: Option<&str>, def_paths: &Vec<String>
 
 /// Creates the default configuration file in the default location. Will
 /// return error if for some reason cannot it cannot write default config to path
-/// Expects `file_path` to be a valid file path, since it cannot verify the path 
+/// Expects `file_path` to be a valid file path, since it cannot verify the path
 /// of an unwritten file
 pub fn create_default_config(file_path: &str, def_paths: &Vec<String>) -> Result<(), io::Error> {
     // Need to use openoptions to write to a file (the regular create file
@@ -98,7 +99,7 @@ mod tests {
     // Test if the shell can read a config file from the filesystem
     #[test]
     fn test_read_config_fs() {
-        let tmp_dir = env::temp_dir(); 
+        let tmp_dir = env::temp_dir();
         test_write_config_fs(); // need to write file before we read it
         let path = format!("{}/test_config_write", tmp_dir.to_str().unwrap());
         let default_paths = create_def_paths();
