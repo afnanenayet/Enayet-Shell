@@ -1,6 +1,7 @@
 # Enayet Shell
-[![Build Status](https://travis-ci.org/afnanenayet/Enayet-Shell.svg?branch=master)](https://travis-ci.org/afnanenayet/Enayet-Shell)
-[![codecov](https://codecov.io/gh/afnanenayet/Enayet-Shell/branch/master/graph/badge.svg)](https://codecov.io/gh/afnanenayet/Enayet-Shell)
+| master branch build status | develop branch build status | codecov status |
+|:-:|---|---|
+| [![Build Status](https://travis-ci.org/afnanenayet/Enayet-Shell.svg?branch=master)](https://travis-ci.org/afnanenayet/Enayet-Shell) | [![Build Status](https://travis-ci.org/afnanenayet/Enayet-Shell.svg?branch=develop)](https://travis-ci.org/afnanenayet/Enayet-Shell) | [![codecov](https://codecov.io/gh/afnanenayet/Enayet-Shell/branch/master/graph/badge.svg)](https://codecov.io/gh/afnanenayet/Enayet-Shell) |
 
 The Enayet Shell is a pet project so that I can get familiar with Rust, and
 have fun creating a shell (something I've been meaning to get to but never
@@ -42,6 +43,9 @@ following dependencies installed and available in your `PATH`:
 - rm
 - sleep
 - tail
+
+The development of this shell also depends on `git-flow`. The development branch
+is called `develop`.
 
 # Usage
 The shell will be built as an executable. To run the shell
