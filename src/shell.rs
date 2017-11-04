@@ -71,6 +71,7 @@ impl Shell {
     /// Searches for and detects whether the binary exists, searching the paths
     /// that were loaded from the config file
     pub fn find_bin(&self, bin_name: &str) -> bool {
+        // TODO multithread the lookup
         let mut bin_found = false;
         let bin_name = bin_name.trim();
 
