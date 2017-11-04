@@ -10,7 +10,7 @@ in Rust (such as `cd` and `ls`).
 
 This implements the reference from the `glibc` library
 [here](https://www.gnu.org/software/libc/manual/html_node/Implementing-a-Shell.html)
-on key parts of implementing a shell. 
+on key parts of implementing a shell.
 
 # Building the shell
 
@@ -46,6 +46,10 @@ following dependencies installed and available in your `PATH`:
 - rm
 - sleep
 - tail
+
+The shell is also built with `git-flow` a program/git utility that helps
+a repo adhere to a sane branching model for features, releases, development
+and hotfixes.
 
 # Usage
 The shell will be built as an executable. To run the shell
