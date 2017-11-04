@@ -12,18 +12,18 @@ use std::path::Path;
 
 pub mod config;
 
-// Checks to see if path/file exists. Returns whether path string is
-// valid and points to something the shell can access
+/// Checks to see if path/file exists. Returns whether path string is
+/// valid and points to something the shell can access
 pub fn verify_path(path: &str) -> bool {
     let full_path = expand_path(path);
     Path::new(full_path.as_str()).exists()
 }
 
-// Normalizes and expands path to its full absolute path, for use with
-// Rust's filesystem code. If path is invalid, inaccessible, or
-// nonexistent, the function will throw an error
-//
-// Ex: ~/example -> /Users/user/example
+/// Normalizes and expands path to its full absolute path, for use with
+/// Rust's filesystem code. If path is invalid, inaccessible, or
+/// nonexistent, the function will throw an error
+///
+/// Ex: `~/example` -> `/Users/user/example`
 pub fn norm_abs_path(path: &str) -> Result<String, io::Error> {
     let expanded_path = expand_path(path);
     let path = Path::new(expanded_path.as_str()).canonicalize();
@@ -35,16 +35,16 @@ pub fn norm_abs_path(path: &str) -> Result<String, io::Error> {
     }
 }
 
-// Simply replaces a "~" in a path string with the $HOME value
-// Will fail if there is no $HOME defined in the user's path
+/// Simply replaces a `~` in a path string with the $HOME value
+/// Will fail if there is no $HOME defined in the user's path
 pub fn expand_path(path: &str) -> String {
     let home_dir = home_dir().unwrap();
     let home_str = home_dir.to_str().unwrap();
     path.replace("~", home_str)
 }
 
-// Condenses a path so that an absolute path is condensed and normalized
-// to a path relative to the home directory
+/// Condenses a path so that an absolute path is condensed and normalized
+/// to a path relative to the home directory
 pub fn condense_path(path: &str) -> Result<String, io::Error> {
     let expanded_path = expand_path(path);
     let home = get_home_str().unwrap();
@@ -59,8 +59,8 @@ pub fn condense_path(path: &str) -> Result<String, io::Error> {
     }
 }
 
-// Gets the string representation for the path to the home directory. In Unix,
-// this is generally the HOME variable
+/// Gets the string representation for the path to the home directory. In Unix,
+/// this is generally the HOME variable
 fn get_home_str() -> Option<String> {
     let home = home_dir();
 
