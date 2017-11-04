@@ -8,6 +8,10 @@ quite got the chance to do). This is a fairly minimal shell but I hope to
 add on to it as time goes on. I will also rewrite small shell utilities
 in Rust (such as `cd` and `ls`).
 
+This implements the reference from the `glibc` library
+[here](https://www.gnu.org/software/libc/manual/html_node/Implementing-a-Shell.html)
+on key parts of implementing a shell. 
+
 # Building the shell
 
 I built this on MacOS 10.12 and on Linux (Ubuntu Precise via Travis CI). It has
