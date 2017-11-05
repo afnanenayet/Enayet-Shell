@@ -72,6 +72,17 @@ fn get_home_str() -> Option<String> {
     }
 }
 
+/// Tokenizes an input string into a vector that contains processes to be 
+/// executed in order of execution.
+///
+/// Ex: tokenizing `echo hello; echo hi' will return 
+/// `["echo hello", "echo hi"]`
+pub fn tokenize_input<'a><S: Into<String>>(input: S) -> 'a Vec<&str> {
+    let input: String = input.into(); // convert to a String type
+    let tok_input = input.split(';').collect::<Vec<_>>();
+    tok_input
+}
+
 // Unit tests
 #[cfg(test)]
 mod tests {
