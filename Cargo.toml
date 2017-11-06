@@ -9,3 +9,11 @@ authors = ["Afnan Enayet <me@afnan.io>"]
 lto = true
 panic = 'abort'
 
+[lib]
+name = "ensh"
+path = "src/lib.rs"
+
+[[bin]]
+name = "ensh_bin"
+path = "src/main.rs"
+
