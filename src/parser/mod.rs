@@ -77,9 +77,9 @@ fn get_home_str() -> Option<String> {
 ///
 /// Ex: tokenizing `echo hello; echo hi' will return
 /// `["echo hello", "echo hi"]`
-pub fn tokenize_input<'a><S: Into<String>>(input: S) -> 'a Vec<&str> {
-    let input: String = input.into(); // convert to a String type
-    let tok_input = input.split(';').collect::<Vec<_>>();
+pub fn tokenize_input <'a, S: Into<String> + Clone>(input: S) -> Vec<String> {
+    let input_cpy: String = input.clone().into(); // convert to a String type
+    let tok_input = input_cpy.split(';').map(|s| s.to_string()).collect();
     tok_input
 }
 
