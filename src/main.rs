@@ -36,7 +36,5 @@ fn main() {
     };
 
     let arg_struct: Args = Args::new(arg_str);
-
-    // Run program
     run(arg_struct);
 }
