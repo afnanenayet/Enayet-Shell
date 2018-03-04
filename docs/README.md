@@ -11,8 +11,9 @@ in Rust (such as `cd` and `ls`).
 
 # Building the shell
 
-I built this on MacOS 10.12 and on Linux (Ubuntu Precise via Travis CI). It has
-not been tested on any other platform.
+I built this on MacOS 10.12, 10.13 and on Linux (Ubuntu Precise via Travis CI).
+It has not been tested on any other platform. It's probably not going to work
+on Windows.
 
 To modify or build this shell:
 
@@ -20,7 +21,7 @@ To modify or build this shell:
     cargo build --release
 
 Note that the shell must be built with Cargo so that the program knows what
-version it is (as it is output when the shell is initialized)
+version it is (shell output relies on a cargo variable)
 
 If you want to build the compressed version of the shell (using gzexe):
 
@@ -74,8 +75,7 @@ The default config file includes the following paths:
     /bin
     /usr/sbin
 
-# Future features
-* tab completion
-* style customization via config file
-* python/python style scripting
-
+# Roadmap 2018
+- [ ] tab completion
+- [ ] style customization via config file
+- [ ] python/python style scripting
