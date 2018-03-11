@@ -105,10 +105,7 @@ mod tests {
         let abs_path = norm_abs_path(path);
 
         // Should throw an error with an invalid path
-        match abs_path {
-            Ok(_) => panic!("Test failed"),
-            Err(e) => println!("{}", e),
-        }
+        assert!(abs_path.is_err())
     }
 
     // Tests norm_abs_path with a path that is already expanded and does not
@@ -135,10 +132,7 @@ mod tests {
         let path = "nonexistent";
         let condensed_path = condense_path(path);
 
-        match condensed_path {
-            Ok(_) => panic!("Test failed"),
-            Err(e) => println!("{}", e),
-        }
+        assert!(condensed_path.is_err())
     }
 
     // Tests if path condense works properly with a valid path that doesn't

@@ -9,8 +9,8 @@
 /// or anything that is not a static or constant declaration of a variable
 ///
 
-// Default paths to be used for the program when no configuration file has been
-// specified (used to find binaries)
+/// Default paths to be used for the program when no configuration file has been
+/// specified (used to find binaries)
 pub const DEFAULT_PATHS: &'static [&'static str] = &[
     "/usr/bin",
     "/usr/local/bin",
@@ -19,8 +19,19 @@ pub const DEFAULT_PATHS: &'static [&'static str] = &[
     "/bin",
 ];
 
-// The shell prompt that precedes each input prompt
-pub const SHELL_PROMPT: &'static str = ">";
+/// The default shell prompt character
+pub const SHELL_PROMPT: &'static str = "❯";
 
-// Default file path for config file
+/// Default file path for config file
 pub const DEF_CONFIG_FNAME: &'static str = ".ensh_config";
+
+// immutable language tokens
+
+/// Token delineating pipe operation
+pub const OP_PIPE: &'static str = "|";
+
+/// Token delineating file redirection
+pub const OP_REDIR: &'static str = ">";
+
+/// A hash set of all valid shell language tokens
+pub const OP_TOKENS: &'static [&'static str] = &[OP_PIPE, OP_REDIR];

@@ -24,13 +24,12 @@ use parser;
 /// A shell and its associated information is associated here, including
 /// the current working directory, the input history, and the paths that
 /// the shell will search
-#[derive(Debug)]
-#[derive(Default)]
+#[derive(Debug, Default)]
 pub struct Shell {
-    working_dir: PathBuf, // The current working directory
+    working_dir: PathBuf,       // The current working directory
     input_history: Vec<String>, // The user's input history
-    output_count: u64, // The number of lines outputted
-    paths: Vec<String>, // The paths the shell will search for binaries
+    output_count: u64,          // The number of lines outputted
+    paths: Vec<String>,         // The paths the shell will search for binaries
 }
 
 // Methods for shell
@@ -66,7 +65,6 @@ impl Shell {
     pub fn get_cwd(&self) -> &str {
         self.working_dir.to_str().unwrap()
     }
-
 
     /// Searches for and detects whether the binary exists, searching the paths
     /// that were loaded from the config file

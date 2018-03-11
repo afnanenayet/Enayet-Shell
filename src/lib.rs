@@ -36,7 +36,9 @@ impl Args {
     /// represented as rust objects in the struct
     pub fn new(args: Option<String>) -> Args {
         // Return struct with extracted arguments
-        Args { config_file_path: args }
+        Args {
+            config_file_path: args,
+        }
     }
 }
 
@@ -127,11 +129,7 @@ mod tests {
     #[test]
     fn test_init_shell() {
         // A test vector of config paths
-        let config_vec = vec![
-            String::from("1"),
-            String::from("2"),
-            String::from("3"),
-        ];
+        let config_vec = vec![String::from("1"), String::from("2"), String::from("3")];
 
         // Create filepath/PathBuf for temporary config file
         let mut temp_pb = temp_dir();

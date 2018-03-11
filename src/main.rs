@@ -16,11 +16,10 @@
 /// * 0 - no errors
 /// * 1 - error reading config file
 ///
-
 extern crate ensh;
 
 use std::env;
-use ensh::{Args, run};
+use ensh::{run, Args};
 
 // Entry point for shell
 // Initializees the shell, then loops program, waiting for commands

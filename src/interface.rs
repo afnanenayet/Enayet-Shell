@@ -5,7 +5,7 @@
 /// STDERR and abstracts away some of the details like formatting and shell
 /// prompts
 
-use std::io::{self, Write, BufRead};
+use std::io::{self, BufRead, Write};
 
 // Prints some given output to stdout
 pub fn print_out(output: &str) {
@@ -27,9 +27,10 @@ pub fn get_input(prompt: &str, working_dir: &str) -> String {
     // Read line from stdin
     let mut input = String::new();
     let stdin = io::stdin();
-    stdin.lock().read_line(&mut input).expect(
-        "could not read from stdin",
-        );
+    stdin
+        .lock()
+        .read_line(&mut input)
+        .expect("could not read from stdin");
     input.trim().to_string() // strip the newline
 }
 

@@ -5,10 +5,10 @@
 /// to default directory or any other directory
 
 use std::io;
-use std::fs::{File};
+use std::fs::File;
 use std::path::Path;
-use std::io::{Write, BufReader, BufRead};
-use consts::{DEF_CONFIG_FNAME, DEFAULT_PATHS};
+use std::io::{BufRead, BufReader, Write};
+use consts::{DEFAULT_PATHS, DEF_CONFIG_FNAME};
 
 /// Loads a list of include paths from the config file. The function takes
 /// an optional string argument. If the argument is not present or the
@@ -80,10 +80,7 @@ mod tests {
 
     // Returns a vector of default paths for use in tests
     fn create_def_paths() -> Vec<String> {
-        let paths: Vec<String> = [
-            "/usr/bin".to_string(),
-            "/usr/local/bin".to_string()
-        ].to_vec();
+        let paths: Vec<String> = ["/usr/bin".to_string(), "/usr/local/bin".to_string()].to_vec();
         paths
     }
 
