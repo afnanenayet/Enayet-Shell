@@ -21,8 +21,8 @@ extern crate ensh;
 use std::env;
 use ensh::{run, Args};
 
-// Entry point for shell
-// Initializees the shell, then loops program, waiting for commands
+/// Entry point for shell
+/// Initializees the shell, then loops program, waiting for commands
 fn main() {
     // Command line args
     let mut args: Vec<String> = env::args().collect();
@@ -36,6 +36,7 @@ fn main() {
 
     let arg_struct: Args = Args::new(arg_str);
 
-    // Run program
-    run(arg_struct);
+    // Run program and exit
+    let exit_status = run(arg_struct);
+    std::process::exit(exit_status as i32);
 }

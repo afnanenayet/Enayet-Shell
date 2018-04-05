@@ -45,7 +45,7 @@ impl Args {
 /// Main entry point for program
 /// Initializes shell, dispatches shell loop, then calls exit function when
 /// appropriate
-pub fn run(args: Args) {
+pub fn run(args: Args) -> u8 {
     // Convert from Option<String> to Option<&str>
     let config_fp: Option<&str> = match args.config_file_path.as_ref() {
         Some(s) => Some(s),
@@ -57,7 +57,7 @@ pub fn run(args: Args) {
 
     // Run everything that needs to run while the shell is operating
     while shell_loop(&mut shell) {}
-    shell_exit(0);
+    0
 }
 
 /// Initialize shell using config file provided from arguments (if any)
@@ -112,11 +112,6 @@ fn shell_loop(shell: &mut Shell) -> bool {
     } else {
         false
     }
-}
-
-// Cleans up and exits the shell with the specified exit code
-fn shell_exit(exit_status: i32) {
-    std::process::exit(exit_status);
 }
 
 // Unit tests
