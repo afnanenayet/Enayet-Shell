@@ -26,10 +26,17 @@ use parser;
 /// the shell will search
 #[derive(Debug, Default)]
 pub struct Shell {
-    working_dir: PathBuf,       // The current working directory
-    input_history: Vec<String>, // The user's input history
-    output_count: u64,          // The number of lines outputted
-    paths: Vec<String>,         // The paths the shell will search for binaries
+    /// The current working directory
+    working_dir: PathBuf,
+
+    /// The user's input history
+    input_history: Vec<String>,
+
+    /// The number of lines outputted
+    output_count: u64,
+
+    /// The paths the shell will search for binaries/commands
+    paths: Vec<String>,
 }
 
 // Methods for shell
