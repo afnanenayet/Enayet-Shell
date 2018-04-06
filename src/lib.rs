@@ -43,8 +43,7 @@ impl Args {
 }
 
 /// Main entry point for program
-/// Initializes shell, dispatches shell loop, then calls exit function when
-/// appropriate
+/// Initialize shell, dispatch shell loop, then call exit function
 pub fn run(args: Args) -> u8 {
     // Convert from Option<String> to Option<&str>
     let config_fp: Option<&str> = match args.config_file_path.as_ref() {

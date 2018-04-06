@@ -21,7 +21,7 @@ pub fn verify_path(path: &str) -> bool {
 
 /// Normalizes and expands path to its full absolute path, for use with
 /// Rust's filesystem code. If path is invalid, inaccessible, or
-/// nonexistent, the function will throw an error
+/// nonexistent, the function will return an error
 ///
 /// Ex: `~/example` -> `/Users/user/example`
 pub fn norm_abs_path(path: &str) -> Result<String, io::Error> {
@@ -60,28 +60,18 @@ pub fn condense_path(path: &str) -> Result<String, io::Error> {
 }
 
 /// Gets the string representation for the path to the home directory. In Unix,
-/// this is generally the HOME variable
+/// this is usually the `$HOME` variable
 fn get_home_str() -> Option<String> {
     let home = home_dir();
 
-    // If home variable is found, convert path to string. Otherwise return
-    // an error
+    // If home variable is found, convert path to string
     match home {
         Some(home) => Some(home.to_str().unwrap().to_string()),
         None => None,
     }
 }
 
-/// Tokenizes an input string into a vector that contains processes to be
-/// executed in order of execution.
-///
-/// Ex: tokenizing `echo hello; echo hi' will return
-/// `["echo hello", "echo hi"]`
-pub fn tokenize_input<S: Into<String>>(input: S) -> Vec<String> {
-    let input: String = input.into(); // convert to a String type
-    let tok_input = input.split(';').map(|s| s.to_string()).collect();
-    tok_input
-}
+// TODO add tokenize_input method
 
 // Unit tests
 #[cfg(test)]

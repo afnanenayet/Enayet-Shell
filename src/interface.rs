@@ -5,16 +5,19 @@
 /// STDERR and abstracts away some of the details like formatting and shell
 /// prompts
 
-use std::io::{self, BufRead, Write};
+use std::io::{stderr, stdin, stdout, BufRead, Write};
 
 // Prints some given output to stdout
 pub fn print_out(output: &str) {
-    println!("{}", output);
+    let r = write!(&mut stdout(), "{}", output);
+    if r.is_err() {
+        print_err("failed to print to stdout");
+    }
 }
 
 // Prints some given output to stderr
 pub fn print_err(output: &str) {
-    let r = writeln!(&mut io::stderr(), "{}", output);
+    let r = write!(&mut stderr(), "{}", output);
     r.expect("failed to print to stderr");
 }
 
@@ -26,7 +29,7 @@ pub fn get_input(prompt: &str, working_dir: &str) -> String {
 
     // Read line from stdin
     let mut input = String::new();
-    let stdin = io::stdin();
+    let stdin = stdin();
     stdin
         .lock()
         .read_line(&mut input)
@@ -38,7 +41,7 @@ pub fn get_input(prompt: &str, working_dir: &str) -> String {
 pub fn print_shell_prompt(prompt: &str, wd_str: &str) {
     println!("({})", wd_str);
     print!("{} ", prompt);
-    let r = io::stdout().flush();
+    let r = stdout().flush();
     r.expect("failed to flush stdout");
 }
 
