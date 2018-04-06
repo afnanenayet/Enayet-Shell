@@ -1,4 +1,4 @@
-/// consts.rs
+/// consts/mod.rs
 ///
 /// # Author
 /// Afnan Enayet
@@ -24,14 +24,3 @@ pub const SHELL_PROMPT: &'static str = "❯";
 
 /// Default file path for config file
 pub const DEF_CONFIG_FNAME: &'static str = ".ensh_config";
-
-// immutable language tokens
-
-/// Token delineating pipe operation
-pub const OP_PIPE: &'static str = "|";
-
-/// Token delineating file redirection
-pub const OP_REDIR: &'static str = ">";
-
-/// A hash set of all valid shell language tokens
-pub const OP_TOKENS: &'static [&'static str] = &[OP_PIPE, OP_REDIR];
