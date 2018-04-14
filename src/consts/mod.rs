@@ -9,6 +9,8 @@
 /// or anything that is not a static or constant declaration of a variable
 ///
 
+pub mod tokens;
+
 /// Default paths to be used for the program when no configuration file has been
 /// specified (used to find binaries)
 pub const DEFAULT_PATHS: &'static [&'static str] = &[

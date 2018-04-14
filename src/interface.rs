@@ -6,6 +6,7 @@
 /// prompts
 
 use std::io::{stderr, stdin, stdout, BufRead, Write};
+use consts::tokens::OP_CONTINUE;
 
 // Prints some given output to stdout
 pub fn print_out(output: &str) {
@@ -26,15 +27,27 @@ pub fn print_err(output: &str) {
 // operation can fail, leaving a None value
 pub fn get_input(prompt: &str, working_dir: &str) -> String {
     print_shell_prompt(prompt, working_dir);
-
-    // Read line from stdin
     let mut input = String::new();
-    let stdin = stdin();
-    stdin
-        .lock()
-        .read_line(&mut input)
-        .expect("could not read from stdin");
-    input.trim().to_string() // strip the newline
+
+    // loop over stdin while the last character is `/`
+    loop {
+        // Read line from stdin
+        let stdin = stdin();
+        stdin
+            .lock()
+            .read_line(&mut input)
+            .expect("could not read from stdin");
+        input.trim().to_string(); // strip the newline
+
+        // TODO fix this part
+        let last_char = input.pop().unwrap().to_string();
+        println!("last char: {}", last_char);
+        if last_char != OP_CONTINUE {
+            input.push_str(last_char.as_str());
+            break;
+        }
+    }
+    input
 }
 
 // Prints shell prompt to STDOUT
