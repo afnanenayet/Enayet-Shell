@@ -16,9 +16,4 @@ pub const OP_SEP: &'static str = ";";
 pub const OP_CONTINUE: &'static str = "\\";
 
 /// An array of all valid shell language tokens
-pub const OP_TOKENS: &'static [&'static str] = &[
-    OP_PIPE,
-    OP_REDIR,
-    OP_SEP,
-    OP_CONTINUE,
-];
+pub const OP_TOKENS: &'static [&'static str] = &[OP_PIPE, OP_REDIR, OP_SEP, OP_CONTINUE];
