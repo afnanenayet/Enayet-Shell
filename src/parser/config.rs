@@ -8,7 +8,7 @@ use std::io;
 use std::fs::{File};
 use std::path::Path;
 use std::io::{Write, BufReader, BufRead};
-use consts::{DEF_CONFIG_FNAME, DEFAULT_PATHS};
+use consts::{DEF_CONFIG_FNAME};
 
 /// Loads a list of include paths from the config file. The function takes
 /// an optional string argument. If the argument is not present or the
@@ -77,6 +77,7 @@ pub fn create_default_config(file_path: &str, def_paths: &Vec<String>) -> Result
 mod tests {
     use super::*;
     use std::env;
+    use consts::DEFAULT_PATHS;
 
     // Returns a vector of default paths for use in tests
     fn create_def_paths() -> Vec<String> {
