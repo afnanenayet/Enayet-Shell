@@ -101,7 +101,6 @@ mod tests {
 
     #[test]
     fn test_should_cont_input() {
-        // TODO
         let test_string = "Hello, world!";
         assert!(!should_cont_input(test_string));
 
